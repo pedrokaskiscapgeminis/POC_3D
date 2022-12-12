@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 import { Request, Response } from 'express';
 //Importamos el modelo de usuario
+const bcrypt = require("bcrypt")
 const User = require("../model/User");
 
 //Interfaz de respuesta del usuario
@@ -27,7 +28,7 @@ module.exports = (app: any) => {
     let userAccount = await User.findOne({ username: username });
 
     if (userAccount != null) {
-      if (password == userAccount.password) {
+      if (await bcrypt.compareSync(password, userAccount.password)) {
         userAccount.lastAuthentication = Date.now();
         await userAccount.save();
 
@@ -63,9 +64,13 @@ module.exports = (app: any) => {
     if (userAccount == null) {
       console.log("Create new account");
 
+      //Encriptamos la contraseña
+
+      let hashedPassword = await bcrypt.hash(password,10);
+
       let newUser = new User({
         username: username,
-        password: password,
+        password: hashedPassword,
 
         lastAuthentication: Date.now(),
       });

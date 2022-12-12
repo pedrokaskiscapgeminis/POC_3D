@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 //Importamos el modelo de usuario
+const bcrypt = require("bcrypt");
 const User = require("../model/User");
 module.exports = (app) => {
     //Routes
@@ -26,7 +27,7 @@ module.exports = (app) => {
         //Obtenemos el usuario y comprobamos que los datos son correctos
         let userAccount = yield User.findOne({ username: username });
         if (userAccount != null) {
-            if (password == userAccount.password) {
+            if (yield bcrypt.compareSync(password, userAccount.password)) {
                 userAccount.lastAuthentication = Date.now();
                 yield userAccount.save();
                 //Creamos la respuesta y la devolvemos
@@ -55,9 +56,11 @@ module.exports = (app) => {
         let userAccount = yield User.findOne({ username: username });
         if (userAccount == null) {
             console.log("Create new account");
+            //Encriptamos la contraseña
+            let hashedPassword = yield bcrypt.hash(password, 10);
             let newUser = new User({
                 username: username,
-                password: password,
+                password: hashedPassword,
                 lastAuthentication: Date.now(),
             });
             yield newUser.save();
