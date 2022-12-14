@@ -16,7 +16,9 @@ private void Start() {
         int randomNumber = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[randomNumber];
         GameObject playerToSpawn = playerPrefabs[(int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"]];
-        PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, Quaternion.identity);
+        playerToSpawn = (GameObject) PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, Quaternion.identity);
+        playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
+        playerToSpawn.transform.Find("PlayerCamera").gameObject.SetActive(true);
     }
 }
 }
