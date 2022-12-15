@@ -34,9 +34,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if(roomInputField.text.Length >=1)
         {
-            PhotonNetwork.CreateRoom(roomInputField.text,new RoomOptions(){ MaxPlayers = 4, BroadcastPropsChangeToAll = true},TypedLobby.Default);
+            PhotonNetwork.CreateRoom(roomInputField.text,new RoomOptions(){ MaxPlayers = 4, BroadcastPropsChangeToAll = true});
         }
     }
+
     public override void OnJoinedRoom()
     {
         lobbyPanel.SetActive(false);
@@ -44,14 +45,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         roomName.text="Room Name: " + PhotonNetwork.CurrentRoom.Name;
         UpdatePlayerList();
     }   
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        if(Time.time >= timeBetweenUpdates){
+        if(Time.time >= nextT){
             UpdateRoomList(roomList);
             nextT = Time.time + timeBetweenUpdates;
         }
-      
     }
+
+ 
+
     void UpdateRoomList(List<RoomInfo> list)
     {
         foreach(RoomItem item in roomItemsList)
