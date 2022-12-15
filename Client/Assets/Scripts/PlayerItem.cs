@@ -20,10 +20,10 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 
    Player player;
 
-   private void Awake()
+   private void Start()
    {
     backgroundImage = GetComponent<Image>();
- 
+    playerProperties["playerAvatar"] = 0;
    }
 
    public void SetPlayerInfo(Player _player)
