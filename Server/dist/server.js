@@ -5,9 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const keys = require("./config/keys");
+const cors = require('cors');
 const mongoose_1 = __importDefault(require("mongoose"));
 //Variable principal
 const app = express();
+app.use(cors());
 //Parser 
 app.use(express.urlencoded({ extended: false }));
 //Setup DB

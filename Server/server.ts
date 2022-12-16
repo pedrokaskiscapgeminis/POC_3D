@@ -1,12 +1,13 @@
 
 const express = require("express") ;
 const keys = require( "./config/keys");
+const cors = require('cors');
 
 import mongoose from "mongoose";
 
 //Variable principal
 const app = express();
-
+app.use(cors())
 
 //Parser 
 
