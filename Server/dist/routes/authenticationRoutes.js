@@ -19,6 +19,7 @@ module.exports = (app) => {
         //Obtenemos el usuario y la contraseña del mensaje
         const password = req.body.password;
         const username = req.body.username;
+        console.log(req.body);
         //Comprobamos que los campos no son vacíos
         if (username == "" || password == "") {
             res.status(400).send("Invalid credentials");
