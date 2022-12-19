@@ -17,6 +17,7 @@ module.exports = (app: any) => {
     //Obtenemos el usuario y la contraseña del mensaje
     const password: string = req.body.password;
     const username: string = req.body.username;
+    console.log(req.body)
 
     //Comprobamos que los campos no son vacíos
     if (username == "" || password == "") {
