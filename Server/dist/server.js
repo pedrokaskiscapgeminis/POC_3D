@@ -11,7 +11,8 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const app = express();
 app.use(cors());
 //Parser 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 //Setup DB
 mongoose_1.default.connect(keys.mongoURI);
 //Setup database models
