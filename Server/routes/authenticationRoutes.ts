@@ -6,7 +6,8 @@ const User = require("../model/User");
 
 //Interfaz de respuesta del usuario
 interface UserResponse {
-  _id: string;
+  ResultCode: number,
+  UserId: string;
   username: string;
   lastAuthentication: Date;
 }
@@ -35,8 +36,9 @@ module.exports = (app: any) => {
 
         //Creamos la respuesta y la devolvemos
         let userResponse: UserResponse = {
+          ResultCode: 1,
           username: userAccount.username,
-          _id: userAccount._id,
+          UserId: userAccount._id,
           lastAuthentication: userAccount.lastAuthentication,
         };
 
@@ -80,8 +82,9 @@ module.exports = (app: any) => {
 
       //Creamos la respuesta y la devolvemos
       let userResponse: UserResponse = {
+        ResultCode: 1,
         username: newUser.username,
-        _id: newUser._id,
+        UserId: newUser._id,
         lastAuthentication: newUser.lastAuthentication,
       };
 

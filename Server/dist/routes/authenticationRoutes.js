@@ -33,8 +33,9 @@ module.exports = (app) => {
                 yield userAccount.save();
                 //Creamos la respuesta y la devolvemos
                 let userResponse = {
+                    ResultCode: 1,
                     username: userAccount.username,
-                    _id: userAccount._id,
+                    UserId: userAccount._id,
                     lastAuthentication: userAccount.lastAuthentication,
                 };
                 res.status(200).send(userResponse);
@@ -67,8 +68,9 @@ module.exports = (app) => {
             yield newUser.save();
             //Creamos la respuesta y la devolvemos
             let userResponse = {
+                ResultCode: 1,
                 username: newUser.username,
-                _id: newUser._id,
+                UserId: newUser._id,
                 lastAuthentication: newUser.lastAuthentication,
             };
             res.status(201).send(userResponse);
