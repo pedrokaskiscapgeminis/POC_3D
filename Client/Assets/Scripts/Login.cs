@@ -5,9 +5,10 @@ using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Realtime;
+using Photon.Pun;
 
-
-public class Login : MonoBehaviour
+public class Login :  MonoBehaviourPunCallbacks
 {
    
     //Inputs del componente
@@ -34,10 +35,9 @@ public class Login : MonoBehaviour
 
     //Función para cambiar el nivel
     public void CambiarNivel(int indice)
-{
+    {
     SceneManager.LoadScene(indice);
-}
-    
+    }
     public void OnLoginClick()
     {
         StartCoroutine(TryLogin());
@@ -46,6 +46,10 @@ public class Login : MonoBehaviour
     {
 
         StartCoroutine(TryCreate());
+    }
+
+    public override void OnDisconnected(DisconnectCause cause) {
+        TryLogin();
     }
 
     private IEnumerator TryLogin()
@@ -146,17 +150,13 @@ public class Login : MonoBehaviour
             botonRegistro.gameObject.SetActive(false);
              usernameInputField.gameObject.SetActive(false);
              passwordInputField.gameObject.SetActive(false);
-             botonInicio.gameObject.SetActive(true);
-
-            
+             botonInicio.gameObject.SetActive(true);   
        }
        //Manejo del error del servidor
        else{
          Debug.Log("Unable to connect to the server...");
         m_TextComponent.text ="El usuario ya existe";
        }
-
-
        yield return null;
     }
 }

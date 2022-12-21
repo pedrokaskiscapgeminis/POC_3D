@@ -5,6 +5,7 @@ using Photon.Pun;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Photon.Realtime;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
@@ -17,10 +18,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
             PhotonNetwork.NickName = usernameInput.text;
             buttonText.text = "Connecting...";
             PhotonNetwork.AutomaticallySyncScene = true;
-            PhotonNetwork.ConnectUsingSettings();
-           
-        }
-       
+            PhotonNetwork.ConnectUsingSettings();  
+        } 
     }
     public override void OnConnectedToMaster()
     {

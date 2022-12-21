@@ -28,7 +28,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Start() 
     {
-        PhotonNetwork.JoinLobby();     
+        PhotonNetwork.JoinLobby();
+        
     }
     public void OnClickCreate()
     {
@@ -53,9 +54,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             nextT = Time.time + timeBetweenUpdates;
         }
     }
-
- 
-
     void UpdateRoomList(List<RoomInfo> list)
     {
         foreach(RoomItem item in roomItemsList)
@@ -68,8 +66,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             RoomItem newRoom = Instantiate(roomItemPrefab,contentObject);
             newRoom.SetRoomName(room.Name);
-            roomItemsList.Add(newRoom);
-            
+            roomItemsList.Add(newRoom); 
         }
     }
     public void JoinRoom(string roomName)
