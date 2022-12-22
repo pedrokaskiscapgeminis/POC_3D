@@ -17,31 +17,13 @@ public class Login :  MonoBehaviourPunCallbacks
     //Texto del componente
     [SerializeField] private TMP_Text m_TextComponent;
     //Botones del componente
-    [SerializeField] private Button botonLogin;
     [SerializeField] private Button botonRegistro;
     [SerializeField] private Button botonInicio;
 
-     public bool pasarNivel;
-    public int indiceNivel;
-
 
     void Start(){
-        botonInicio.gameObject.SetActive(false);
+
      }
-
-
-
-
-
-    //Función para cambiar el nivel
-    public void CambiarNivel(int indice)
-    {
-    SceneManager.LoadScene(indice);
-    }
-    public void OnLoginClick()
-    {
-        StartCoroutine(TryLogin());
-    }
      public void OnCreateClick()
     {
 
@@ -49,65 +31,8 @@ public class Login :  MonoBehaviourPunCallbacks
     }
 
     public override void OnDisconnected(DisconnectCause cause) {
-        TryLogin();
+        
     }
-
-    private IEnumerator TryLogin()
-    {
-
-       //Obtenemos los campos de los inputs
-       string username = usernameInputField.text;
-       string password = passwordInputField.text;
-       Debug.Log(username + " " + password);
-      m_TextComponent.text = "Conectando...";
-
-       //Construcción del formulario de la petición
-       WWWForm form = new WWWForm();
-       form.AddField("username", username);
-       form.AddField("password", password);
-
-       //Enviamos la petición
-       UnityWebRequest request = UnityWebRequest.Post("https://meta-login.onrender.com/users",form);
-       var handler = request.SendWebRequest();
-       
-       //Tiempo de conexión con el servidor
-       float startTime = 0.0f;
-       while (!handler.isDone)
-       {
-
-        startTime += Time.deltaTime;
-
-        if (startTime > 10.0f)
-        {
-            break;
-        }
-        yield return null;
-       }
-
-        //Manejo de la respuesta del servidor
-       if (request.result == UnityWebRequest.Result.Success)
-       {
-            Debug.Log(request.downloadHandler.text);
-            m_TextComponent.text = "Bienvenido";
-
-              //Desactivación de objetos
-            botonLogin.gameObject.SetActive(false);
-            botonRegistro.gameObject.SetActive(false);
-                     usernameInputField.gameObject.SetActive(false);
-             passwordInputField.gameObject.SetActive(false);
-             botonInicio.gameObject.SetActive(true);
-           
-            
-       }
-       //Manejo del error del servidor
-       else{
-         Debug.Log("Unable to connect to the server...");
-       }
-
-
-       yield return null;
-    }
-
 
     private IEnumerator TryCreate()
     {
@@ -143,14 +68,16 @@ public class Login :  MonoBehaviourPunCallbacks
        if (request.result == UnityWebRequest.Result.Success)
        {
             Debug.Log(request.downloadHandler.text);
-            m_TextComponent.text = "Bienvenido";
+            m_TextComponent.text = "Registro realizado con éxito";
 
             //Desactivación de objetos
-         botonLogin.gameObject.SetActive(false);
             botonRegistro.gameObject.SetActive(false);
              usernameInputField.gameObject.SetActive(false);
              passwordInputField.gameObject.SetActive(false);
-             botonInicio.gameObject.SetActive(true);   
+
+             Vector3 anchoredPos = botonInicio.GetComponent<RectTransform>().anchoredPosition;
+                anchoredPos.x = 0;
+                botonInicio.GetComponent<RectTransform>().anchoredPosition = anchoredPos;
        }
        //Manejo del error del servidor
        else{
