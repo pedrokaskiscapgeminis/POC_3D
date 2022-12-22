@@ -10,6 +10,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public TMP_InputField roomInputField;
     public GameObject lobbyPanel;
+
+    public TMP_Text errorText;
     public GameObject roomPanel;
     public TMP_Text roomName;
     public RoomItem roomItemPrefab;
@@ -72,6 +74,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void JoinRoom(string roomName)
     {
         PhotonNetwork.JoinRoom(roomName);
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message){
+
+        //Comprobar el error de retorno para comprobar distintos fallos
+        Debug.Log(message);
+        errorText.text = "Ya te encuentras en esa sala";
+
     }
      public void OnClickLeaveRoom()
     {
