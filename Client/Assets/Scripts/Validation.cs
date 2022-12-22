@@ -1,64 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using TMPro;
-using Photon.Realtime;
 using System.Linq;
 
-public class ConnectToServer : MonoBehaviourPunCallbacks
+public class Validation : MonoBehaviour
 {
-    public TMP_InputField usernameInput;
-    public TMP_InputField passwordInput;
-    public TMP_Text buttonText;
-
-    public TMP_Text TitleText;
-
-    public void OnClickConnect()
-    {
-        //Obtenemos los campos de los inputs
-        string username = usernameInput.text;
-        string password = passwordInput.text;
-
-        //Validación de los campos
-        if(ValidatePassword(password) && ValidateUsername(username))
-        {
-            print("Connecting to server.");
-            TitleText.text = "Conectando...";
-            Debug.Log("Credenciales validas");
-            
-            //Creamos el diccionario para enviar la petición POST
-            Dictionary<string, object> userdata = new Dictionary<string, object>();
-            userdata.Add("username",usernameInput.text);
-            userdata.Add("password",passwordInput.text);
-     
-            //Creamos el objeto AuthenticationValues que le pasaremos a Photon
-            AuthenticationValues authValues = new AuthenticationValues();
-            authValues.AuthType = CustomAuthenticationType.Custom;
-            authValues.SetAuthPostData(userdata);
-            PhotonNetwork.AuthValues = authValues;
-
-            //?
-            PhotonNetwork.AutomaticallySyncScene = true;
-            //Realizamos la conexión
-            PhotonNetwork.NickName = usernameInput.text;
-            PhotonNetwork.ConnectUsingSettings();
-        }
-        else
-        {
-            Debug.Log("Credenciales invalidas");
-        }
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        print(PhotonNetwork.LocalPlayer.UserId);
-        SceneManager.LoadScene("Lobby");
-    }
-
-    public bool ValidatePassword(string password)
+    public static bool ValidatePassword(string password)
     {
 
         bool hasLowercase = false;
@@ -119,7 +66,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         return true;// Password is valid when pass everycheck
     }
 
-    public bool ValidateUsername(string username)
+    public static bool ValidateUsername(string username)
     {
         // Check minimum length
         if (username.Length < 3)
