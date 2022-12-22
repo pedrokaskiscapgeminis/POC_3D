@@ -28,7 +28,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
             print("Connecting to server.");
             TitleText.text = "Conectando...";
             Debug.Log("Credenciales validas");
-            
+
             //Creamos el diccionario para enviar la petición POST
             Dictionary<string, object> userdata = new Dictionary<string, object>();
             userdata.Add("username",usernameInput.text);
@@ -100,8 +100,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         }
         if (!hasLowercase || !hasUppercase || !hasNumber || !hasSpecial)
         {
-            return false;//Not a secure password
             Debug.Log("Not secure password");
+            return false;//Not a secure password
         }
 
         // Check for forbidden characters
@@ -111,8 +111,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         {
             if (password.Contains(c))
             {
-                return false; //Pass Invalid return false
                 Debug.Log("Invalid characters");
+                return false; //Pass Invalid return false
             }
         }
 
@@ -144,7 +144,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         }
 
         // Check forbidden characters
-        string forbidden = "!@#$%^&*()+=";
+        string forbidden = "@#$%^&*()+=";
         foreach (char c in forbidden)
         {
             if (username.Contains(c))

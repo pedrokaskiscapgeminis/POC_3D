@@ -138,8 +138,8 @@ public class Login :  MonoBehaviourPunCallbacks
         }
         if (!hasLowercase || !hasUppercase || !hasNumber || !hasSpecial)
         {
-            return false;//Not a secure password
             Debug.Log("Not secure password");
+            return false;//Not a secure password
         }
 
         // Check for forbidden characters
@@ -149,8 +149,8 @@ public class Login :  MonoBehaviourPunCallbacks
         {
             if (password.Contains(c))
             {
-                return false; //Pass Invalid return false
                 Debug.Log("Invalid characters");
+                return false; //Pass Invalid return false
             }
         }
 
