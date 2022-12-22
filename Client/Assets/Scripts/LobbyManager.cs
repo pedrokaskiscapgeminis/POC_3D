@@ -13,6 +13,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public GameObject roomPanel;
     public TMP_Text roomName;
     public RoomItem roomItemPrefab;
+    public TestHome voiceChat;
     List<RoomItem> roomItemsList = new List<RoomItem>();
 
     public Transform contentObject;
@@ -72,6 +73,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void JoinRoom(string roomName)
     {
         PhotonNetwork.JoinRoom(roomName);
+        voiceChat.onJoinButtonClicked(roomName);
     }
      public void OnClickLeaveRoom()
     {
