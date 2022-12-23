@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -37,6 +38,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if(roomInputField.text.Length >=1)
         {
             PhotonNetwork.CreateRoom(roomInputField.text,new RoomOptions(){ MaxPlayers = 4, BroadcastPropsChangeToAll = true});
+            voiceChat.onJoinButtonClicked(roomInputField.text);;
         }
     }
 
@@ -78,6 +80,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
      public void OnClickLeaveRoom()
     {
      PhotonNetwork.LeaveRoom();
+     voiceChat.onLeaveButtonClicked();
      }
     public override void OnLeftRoom()
     {
@@ -122,11 +125,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     private void Update() {
         {
-            if(PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= 1)
-            {
-                playButton.SetActive(true);
-            }else{
-                playButton.SetActive(false);
+            if (SceneManager.GetActiveScene().name == "Lobby"){
+                if(PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= 1)
+                {
+                    playButton.SetActive(true);
+                }else{
+                    playButton.SetActive(false);
+                }
             }
         }
     }

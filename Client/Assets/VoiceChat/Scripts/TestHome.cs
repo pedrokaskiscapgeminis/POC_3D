@@ -18,9 +18,9 @@ public class TestHome : MonoBehaviour
 #endif
     static TestHelloUnityVideo app = null;
 
-    private string HomeSceneName = "prueba";
+    private string HomeSceneName = "Lobby";
 
-    private string PlaySceneName = "SampleScene";
+    private string PlaySceneName = "Game";
 
     // PLEASE KEEP THIS App ID IN SAFE PLACE
     // Get your own App ID at https://dashboard.agora.io/
@@ -45,6 +45,11 @@ public class TestHome : MonoBehaviour
     void Update()
     {
         CheckPermissions();
+
+        if (Input.GetKeyDown("m") && (SceneManager.GetActiveScene().name == PlaySceneName)){
+            Debug.Log("M WAS PRESSED");
+            app.MuteAudio();
+        }
     }
 
     private void CheckAppId()
@@ -96,7 +101,7 @@ public class TestHome : MonoBehaviour
         // join channel and jump to next scene
         app.join(ChannelName, muted);
         SceneManager.sceneLoaded += OnLevelFinishedLoading; // configure GameObject after scene is loaded
-        SceneManager.LoadScene(PlaySceneName, LoadSceneMode.Single);
+        //SceneManager.LoadScene(PlaySceneName, LoadSceneMode.Single);
     }
 
     public void onLeaveButtonClicked()
@@ -106,7 +111,7 @@ public class TestHome : MonoBehaviour
             app.leave(); // leave channel
             app.unloadEngine(); // delete engine
             app = null; // delete app
-            SceneManager.LoadScene(HomeSceneName, LoadSceneMode.Single);
+            //SceneManager.LoadScene(HomeSceneName, LoadSceneMode.Single);
         }
         Destroy(gameObject);
     }

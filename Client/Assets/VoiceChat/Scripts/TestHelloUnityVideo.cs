@@ -27,7 +27,7 @@ public class TestHelloUnityVideo
     // private string mChannelName { get; set; }
     //private Text ChannelNameLabel { get; set; }
 
-    private ToggleStateButton MuteAudioButton { get; set; }
+    // private ToggleStateButton MuteAudioButton { get; set; }
     
     // Testing Volume Indication
     private bool TestVolumeIndication = false;
@@ -157,41 +157,51 @@ public class TestHelloUnityVideo
             MessageText = text.GetComponent<Text>();
         }
 
-        SetButtons();
+        // SetButtons();
     }
-    private void SetButtons()
-    {
-        MuteAudioButton = GameObject.Find("MuteButton").GetComponent<ToggleStateButton>();
-        if (MuteAudioButton != null)
-        {
-            MuteAudioButton.Setup(initOnOff: false,
-                onStateText: "", offStateText: "",
-                callOnAction: () =>
-                {
-                    mRtcEngine.MuteLocalAudioStream(true);
-                    AudioVideoState.pubAudio = false;
-                    Debug.Log(AudioVideoState.pubAudio);
-                    // GameObject.Find("MuteButton").GetComponent<Image>().sprite = MicroOff;
-                },
-                callOffAction: () =>
-                {
-                    mRtcEngine.MuteLocalAudioStream(false);
-                    AudioVideoState.pubAudio = true;
-                    Debug.Log(AudioVideoState.pubAudio);
-                    // GameObject.Find("MuteButton").GetComponent<Image>().sprite = MicroOn; 
-                }
-            );
-        }
+    // private void SetButtons()
+    // {
+    //     MuteAudioButton = GameObject.Find("MuteButton").GetComponent<ToggleStateButton>();
+    //     if (MuteAudioButton != null)
+    //     {
+    //         MuteAudioButton.Setup(initOnOff: false,
+    //             onStateText: "", offStateText: "",
+    //             callOnAction: () =>
+    //             {
+    //                 mRtcEngine.MuteLocalAudioStream(true);
+    //                 AudioVideoState.pubAudio = false;
+    //                 Debug.Log(AudioVideoState.pubAudio);
+    //                 // GameObject.Find("MuteButton").GetComponent<Image>().sprite = MicroOff;
+    //             },
+    //             callOffAction: () =>
+    //             {
+    //                 mRtcEngine.MuteLocalAudioStream(false);
+    //                 AudioVideoState.pubAudio = true;
+    //                 Debug.Log(AudioVideoState.pubAudio);
+    //                 // GameObject.Find("MuteButton").GetComponent<Image>().sprite = MicroOn; 
+    //             }
+    //         );
+    //     }
 
-        //ChannelNameLabel = GameObject.Find("ChannelName").GetComponent<Text>();
+    //     //ChannelNameLabel = GameObject.Find("ChannelName").GetComponent<Text>();
+    // }
+
+    public void MuteAudio(){
+        if (AudioVideoState.pubAudio == true){
+            mRtcEngine.MuteLocalAudioStream(true);
+            AudioVideoState.pubAudio = false;
+            Debug.Log("Hola");
+        } else {
+            mRtcEngine.MuteLocalAudioStream(false);
+            AudioVideoState.pubAudio = true;
+            Debug.Log("Adios");
+        }
     }
 
     // implement engine callbacks
     private void onJoinChannelSuccess(string channelName, uint uid, int elapsed)
     {
         Debug.Log("JoinChannel " + channelName + " Success: uid = " + uid);
-        GameObject textVersionGameObject = GameObject.Find("VersionText");
-        textVersionGameObject.GetComponent<Text>().text = "SDK Version : " + getSdkVersion();
         //ChannelNameLabel.text = channelName;
     }
 

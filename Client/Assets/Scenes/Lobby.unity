@@ -2050,7 +2050,7 @@ MonoBehaviour:
   roomPanel: {fileID: 119749431}
   roomName: {fileID: 628324908}
   roomItemPrefab: {fileID: 8922691446385320113, guid: 55d0b644a90a14240882d68456f289a8, type: 3}
-  voiceChat: {fileID: 0}
+  voiceChat: {fileID: 1295563036}
   contentObject: {fileID: 1644937402}
   timeBetweenUpdates: 1.5
   playerItemsList: []

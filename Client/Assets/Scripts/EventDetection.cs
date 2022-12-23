@@ -7,10 +7,10 @@ using agora_gaming_rtc;
 
 public class EventDetection : MonoBehaviour
 {
-    [SerializeField]
+    // [SerializeField]
     private Button button;
-    private IRtcEngine mRtcEngine { get; set; }
-    private AudioVideoStates AudioVideoState = new AudioVideoStates();
+    // private IRtcEngine mRtcEngine { get; set; }
+    // private AudioVideoStates AudioVideoState = new AudioVideoStates();
 
     // Update is called once per frame
     void Update()
