@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2724309140500475812}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.97499996, z: 0}
+  m_LocalPosition: {x: 0, y: 0.975, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -209,8 +209,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7642519349300723566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 247, y: 0, z: 0}
-  m_LocalScale: {x: 70, y: 100, z: 70}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.5, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8715032495611075899}
@@ -248,10 +248,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b6ef91e123303f4e8c08d36b314af63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingSpeed: 115
-  runningSpeed: 150
-  jumpSpeed: 35
-  gravity: 45
+  walkingSpeed: 2
+  runningSpeed: 4
+  jumpSpeed: 5
+  gravity: 15
   playerCamera: {fileID: 4213534978067119897}
   lookSpeed: 2
   lookXLimit: 45

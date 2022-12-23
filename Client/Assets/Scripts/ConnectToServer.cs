@@ -25,8 +25,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         //Validación de los campos
         if(ValidatePassword(password) && ValidateUsername(username))
         {
-            print("Connecting to server.");
-            TitleText.text = "Conectando...";
+            print("Trying to conect to server.");
+            TitleText.text = "Validando...";
             Debug.Log("Credenciales validas");
 
             //Creamos el diccionario para enviar la petición POST
@@ -44,7 +44,12 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
             PhotonNetwork.AutomaticallySyncScene = true;
             //Realizamos la conexión
             PhotonNetwork.NickName = usernameInput.text;
-            PhotonNetwork.ConnectUsingSettings();
+
+            if(PhotonNetwork.ConnectUsingSettings())
+            {
+                TitleText.text = "Conectando...";
+            }
+            
         }
         else
         {
