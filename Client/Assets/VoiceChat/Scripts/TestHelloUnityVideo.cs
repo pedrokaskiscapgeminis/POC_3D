@@ -15,19 +15,14 @@ using agora_utilities;
 public class TestHelloUnityVideo 
 {
     //Micro Sprites
-    // public Sprite MicroOff = Resources.Load<Sprite>("Sprites/micro_off");
-    // public Sprite MicroOn = Resources.Load<Sprite>("Sprites/micro_on");
+    public Sprite MicroOff = Resources.Load<Sprite>("Sprites/micro_off");
+    public Sprite MicroOn = Resources.Load<Sprite>("Sprites/micro_on");
 
     // instance of agora engine
     private IRtcEngine mRtcEngine { get; set; }
     private Text MessageText { get; set; }
 
     private AudioVideoStates AudioVideoState = new AudioVideoStates();
-
-    // private string mChannelName { get; set; }
-    //private Text ChannelNameLabel { get; set; }
-
-    // private ToggleStateButton MuteAudioButton { get; set; }
     
     // Testing Volume Indication
     private bool TestVolumeIndication = false;
@@ -113,8 +108,6 @@ public class TestHelloUnityVideo
                  options: new ChannelMediaOptions(AudioVideoState.subAudio,
                  AudioVideoState.pubAudio));
         }
-
-        // mChannelName = channel;
     }
 
     public string getSdkVersion()
@@ -157,44 +150,23 @@ public class TestHelloUnityVideo
             MessageText = text.GetComponent<Text>();
         }
 
-        // SetButtons();
     }
-    // private void SetButtons()
-    // {
-    //     MuteAudioButton = GameObject.Find("MuteButton").GetComponent<ToggleStateButton>();
-    //     if (MuteAudioButton != null)
-    //     {
-    //         MuteAudioButton.Setup(initOnOff: false,
-    //             onStateText: "", offStateText: "",
-    //             callOnAction: () =>
-    //             {
-    //                 mRtcEngine.MuteLocalAudioStream(true);
-    //                 AudioVideoState.pubAudio = false;
-    //                 Debug.Log(AudioVideoState.pubAudio);
-    //                 // GameObject.Find("MuteButton").GetComponent<Image>().sprite = MicroOff;
-    //             },
-    //             callOffAction: () =>
-    //             {
-    //                 mRtcEngine.MuteLocalAudioStream(false);
-    //                 AudioVideoState.pubAudio = true;
-    //                 Debug.Log(AudioVideoState.pubAudio);
-    //                 // GameObject.Find("MuteButton").GetComponent<Image>().sprite = MicroOn; 
-    //             }
-    //         );
-    //     }
 
-    //     //ChannelNameLabel = GameObject.Find("ChannelName").GetComponent<Text>();
-    // }
-
-    public void MuteAudio(){
+    public void MuteAudio(string activeScene){
         if (AudioVideoState.pubAudio == true){
             mRtcEngine.MuteLocalAudioStream(true);
             AudioVideoState.pubAudio = false;
-            Debug.Log("Hola");
+            Debug.Log("MicroOff");
+            
+            if (activeScene != "Lobby")
+            GameObject.Find("Micro").GetComponent<Image>().sprite = MicroOff;
         } else {
             mRtcEngine.MuteLocalAudioStream(false);
             AudioVideoState.pubAudio = true;
-            Debug.Log("Adios");
+            Debug.Log("MicroOn");
+
+            if (activeScene != "Lobby")
+            GameObject.Find("Micro").GetComponent<Image>().sprite = MicroOn;
         }
     }
 
@@ -202,7 +174,6 @@ public class TestHelloUnityVideo
     private void onJoinChannelSuccess(string channelName, uint uid, int elapsed)
     {
         Debug.Log("JoinChannel " + channelName + " Success: uid = " + uid);
-        //ChannelNameLabel.text = channelName;
     }
 
     // When a remote user joined, this delegate will be called. 

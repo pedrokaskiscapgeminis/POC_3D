@@ -1,6 +1,7 @@
 ﻿using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Linq;
 #if(UNITY_2018_3_OR_NEWER && UNITY_ANDROID)
 using UnityEngine.Android;
 #endif
@@ -20,7 +21,9 @@ public class TestHome : MonoBehaviour
 
     private string HomeSceneName = "Lobby";
 
-    private string PlaySceneName = "Game";
+    private string[] PlaySceneName = new string[]{"Mapa1"};
+
+    public GameObject roomPanel;
 
     // PLEASE KEEP THIS App ID IN SAFE PLACE
     // Get your own App ID at https://dashboard.agora.io/
@@ -46,9 +49,9 @@ public class TestHome : MonoBehaviour
     {
         CheckPermissions();
 
-        if (Input.GetKeyDown("m") && (SceneManager.GetActiveScene().name == PlaySceneName)){
+        if (Input.GetKeyDown("m") && (PlaySceneName.Contains(SceneManager.GetActiveScene().name)  || ((SceneManager.GetActiveScene().name == HomeSceneName) && roomPanel.activeSelf))){
             Debug.Log("M WAS PRESSED");
-            app.MuteAudio();
+            app.MuteAudio(SceneManager.GetActiveScene().name);
         }
     }
 
@@ -118,7 +121,7 @@ public class TestHome : MonoBehaviour
 
     public void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == PlaySceneName)
+        if (PlaySceneName.Contains(scene.name))
         {
             if (!ReferenceEquals(app, null))
             {
