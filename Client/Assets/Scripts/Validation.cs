@@ -1,69 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using TMPro;
-using Photon.Realtime;
 using System.Linq;
 
-public class ConnectToServer : MonoBehaviourPunCallbacks
+public class Validation : MonoBehaviour
 {
-    public TMP_InputField usernameInput;
-    public TMP_InputField passwordInput;
-    public TMP_Text buttonText;
-
-    public TMP_Text TitleText;
-
-    public void OnClickConnect()
-    {
-        //Obtenemos los campos de los inputs
-        string username = usernameInput.text;
-        string password = passwordInput.text;
-
-        //Validación de los campos
-        if(ValidatePassword(password) && ValidateUsername(username))
-        {
-            print("Trying to conect to server.");
-            TitleText.text = "Validando...";
-            Debug.Log("Credenciales validas");
-
-            //Creamos el diccionario para enviar la petición POST
-            Dictionary<string, object> userdata = new Dictionary<string, object>();
-            userdata.Add("username",usernameInput.text);
-            userdata.Add("password",passwordInput.text);
-     
-            //Creamos el objeto AuthenticationValues que le pasaremos a Photon
-            AuthenticationValues authValues = new AuthenticationValues();
-            authValues.AuthType = CustomAuthenticationType.Custom;
-            authValues.SetAuthPostData(userdata);
-            PhotonNetwork.AuthValues = authValues;
-
-            //?
-            PhotonNetwork.AutomaticallySyncScene = true;
-            //Realizamos la conexión
-            PhotonNetwork.NickName = usernameInput.text;
-
-            if(PhotonNetwork.ConnectUsingSettings())
-            {
-                TitleText.text = "Conectando...";
-            }
-            
-        }
-        else
-        {
-            Debug.Log("Credenciales invalidas");
-        }
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        print(PhotonNetwork.LocalPlayer.UserId);
-        SceneManager.LoadScene("Lobby");
-    }
-
-    public bool ValidatePassword(string password)
+    public static bool ValidatePassword(string password)
     {
 
         bool hasLowercase = false;
@@ -105,8 +47,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         }
         if (!hasLowercase || !hasUppercase || !hasNumber || !hasSpecial)
         {
-            Debug.Log("Not secure password");
             return false;//Not a secure password
+            Debug.Log("Not secure password");
         }
 
         // Check for forbidden characters
@@ -116,15 +58,15 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         {
             if (password.Contains(c))
             {
-                Debug.Log("Invalid characters");
                 return false; //Pass Invalid return false
+                Debug.Log("Invalid characters");
             }
         }
 
         return true;// Password is valid when pass everycheck
     }
 
-    public bool ValidateUsername(string username)
+    public static bool ValidateUsername(string username)
     {
         // Check minimum length
         if (username.Length < 3)
@@ -149,7 +91,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         }
 
         // Check forbidden characters
-        string forbidden = "@#$%^&*()+=";
+        string forbidden = "!@#$%^&*()+=";
         foreach (char c in forbidden)
         {
             if (username.Contains(c))
