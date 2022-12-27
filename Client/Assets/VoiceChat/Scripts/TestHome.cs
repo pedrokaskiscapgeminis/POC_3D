@@ -116,7 +116,7 @@ public class TestHome : MonoBehaviour
             app = null; // delete app
             //SceneManager.LoadScene(HomeSceneName, LoadSceneMode.Single);
         }
-        Destroy(gameObject);
+        // Destroy(gameObject);
     }
 
     public void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)

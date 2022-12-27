@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -135,13 +134,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     private void Update() {
         {
-            if (SceneManager.GetActiveScene().name == "Lobby"){
-                if(PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= 1)
-                {
-                    playButton.SetActive(true);
-                }else{
-                    playButton.SetActive(false);
-                }
+            if(PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= 1)
+            {
+                playButton.SetActive(true);
+            }else{
+                playButton.SetActive(false);
             }
         }
     }
