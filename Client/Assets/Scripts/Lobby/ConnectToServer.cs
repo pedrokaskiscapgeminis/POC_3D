@@ -12,6 +12,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 {
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
+    private LoadBalancingClient lbc;
 
     public TMP_Text TitleText;
 
@@ -33,6 +34,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
             Debug.Log(passwordInput.text);
             userdata.Add("username",usernameInput.text);
             userdata.Add("password",passwordInput.text);
+
+            lbc.LoadBalancingPeer.MaximumTransferUnit = 500;
      
             //Creamos el objeto AuthenticationValues que le pasaremos a Photon
             AuthenticationValues authValues = new AuthenticationValues();

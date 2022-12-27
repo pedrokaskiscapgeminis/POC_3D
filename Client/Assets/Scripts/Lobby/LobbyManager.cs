@@ -30,6 +30,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Start() 
     {
+        //LoadBalancingClient loadBalancingClient = new LoadBalancingClient(null, TurnbasedAppId, "1.0"); // the master server address is not used when connecting via nameserver
         PhotonNetwork.JoinLobby();
         
     }
@@ -141,6 +142,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnClickPlayButton()
     {
+        
         PhotonNetwork.LoadLevel("Mapa1");
     }
 }
