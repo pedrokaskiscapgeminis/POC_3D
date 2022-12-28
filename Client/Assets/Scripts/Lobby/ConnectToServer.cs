@@ -16,6 +16,11 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public TMP_Text TitleText;
 
+    private void Start ()
+    {
+        PhotonNetwork.GameVersion = "0.0.1";
+    }
+
     public void OnClickConnect()
     {
         //Obtenemos los campos de los inputs
@@ -30,12 +35,10 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
             //Creamos el diccionario para enviar la petición POST
             Dictionary<string, object> userdata = new Dictionary<string, object>();
-            Debug.Log(usernameInput.text);
-            Debug.Log(passwordInput.text);
+            //Debug.Log(usernameInput.text);
+            //Debug.Log(passwordInput.text);
             userdata.Add("username",usernameInput.text);
             userdata.Add("password",passwordInput.text);
-
-            //lbc.LoadBalancingPeer.MaximumTransferUnit = 500;
      
             //Creamos el objeto AuthenticationValues que le pasaremos a Photon
             AuthenticationValues authValues = new AuthenticationValues();
@@ -62,8 +65,13 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        print(PhotonNetwork.LocalPlayer.UserId);
+        print("Conected to master" + ", " + PhotonNetwork.LocalPlayer.UserId);
         SceneManager.LoadScene("Lobby");
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        print("Disconected from server, reason: " + cause.ToString());
     }
 
     public override void OnCustomAuthenticationFailed(string falloauth = "AuthFailed")

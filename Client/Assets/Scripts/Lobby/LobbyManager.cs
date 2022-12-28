@@ -90,8 +90,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
      }
     public override void OnLeftRoom()
     {
-    roomPanel.SetActive(false);
-    lobbyPanel.SetActive(true);
+        roomPanel.SetActive(false);
+        lobbyPanel.SetActive(true);
     }
     public override void OnConnectedToMaster()
     {
@@ -142,7 +142,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnClickPlayButton()
     {
-        
         PhotonNetwork.LoadLevel("Mapa1");
     }
 }

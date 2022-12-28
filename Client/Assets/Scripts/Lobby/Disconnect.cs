@@ -14,9 +14,11 @@ public class Disconnect : MonoBehaviourPunCallbacks
         PhotonNetwork.Disconnect();
         Application.Quit();
     }
-      public void OnClickBackLobby()
-    {   
-        
+      public void OnClickReturnLobby()
+    {
+      PhotonNetwork.AutomaticallySyncScene = false;
+      PhotonNetwork.JoinLobby();
+      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
    
    

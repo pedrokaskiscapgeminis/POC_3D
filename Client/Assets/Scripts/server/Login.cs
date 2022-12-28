@@ -11,7 +11,6 @@ using System.Linq;
 
 public class Login :  MonoBehaviourPunCallbacks
 {
-   
     //Inputs del componente
     [SerializeField] private TMP_InputField usernameInputField;
     [SerializeField] private TMP_InputField passwordInputField;
@@ -21,23 +20,13 @@ public class Login :  MonoBehaviourPunCallbacks
     [SerializeField] private Button botonRegistro;
     [SerializeField] private Button botonInicio;
 
-
-    void Start(){
-
-     }
-     public void OnCreateClick()
+    public void OnCreateClick()
     {
-
         StartCoroutine(TryCreate());
-    }
-
-    public override void OnDisconnected(DisconnectCause cause) {
-        
     }
 
     private IEnumerator TryCreate()
     {
-
        //Obtenemos los campos de los inputs
        string username = usernameInputField.text;
        string password = passwordInputField.text;
@@ -60,7 +49,6 @@ public class Login :  MonoBehaviourPunCallbacks
                 float startTime = 0.0f;
                 while (!handler.isDone)
                 {
-
                     startTime += Time.deltaTime;
 
                     if (startTime > 10.0f)
@@ -82,8 +70,8 @@ public class Login :  MonoBehaviourPunCallbacks
                         passwordInputField.gameObject.SetActive(false);
 
                         Vector3 anchoredPos = botonInicio.GetComponent<RectTransform>().anchoredPosition;
-                            anchoredPos.x = 0;
-                            botonInicio.GetComponent<RectTransform>().anchoredPosition = anchoredPos;
+                        anchoredPos.x = 0;
+                        botonInicio.GetComponent<RectTransform>().anchoredPosition = anchoredPos;
                 }
             //Manejo del error del servidor
                 else{

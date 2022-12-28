@@ -9671,9 +9671,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2095543375972205012, guid: 556983b212072f64985b2e370fc7bff7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickReturnLobby
+      objectReference: {fileID: 0}
     - target: {fileID: 2095543376706389882, guid: 556983b212072f64985b2e370fc7bff7, type: 3}
       propertyPath: m_Name
       value: PauseMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 2095543376706389882, guid: 556983b212072f64985b2e370fc7bff7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2095543376706389885, guid: 556983b212072f64985b2e370fc7bff7, type: 3}
       propertyPath: m_Pivot.x
@@ -9766,6 +9774,25 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2095543376706389882, guid: 556983b212072f64985b2e370fc7bff7, type: 3}
   m_PrefabInstance: {fileID: 1422397279}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1422397281 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2095543375972205014, guid: 556983b212072f64985b2e370fc7bff7, type: 3}
+  m_PrefabInstance: {fileID: 1422397279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1422397282
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422397281}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1001 &1472973299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12613,7 +12640,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41594
+  m_Name: pb_Mesh31328
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
