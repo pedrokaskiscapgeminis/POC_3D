@@ -14,12 +14,28 @@ public class Disconnect : MonoBehaviourPunCallbacks
         PhotonNetwork.Disconnect();
         Application.Quit();
     }
+
       public void OnClickReturnLobby()
     {
-      PhotonNetwork.AutomaticallySyncScene = false;
-      PhotonNetwork.JoinLobby();
+      //PhotonNetwork.AutomaticallySyncScene = false;
+      PhotonNetwork.LeaveRoom();
+      //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public override void OnLeftRoom()
+    {
+      Debug.Log("Leaving");
+
+
+    }
+
+    public override void OnConnectedToMaster(){
       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
+
+
+
+
    
    
 }
