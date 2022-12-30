@@ -28,6 +28,7 @@ public class PlayerSpawn : MonoBehaviour
 
         playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
         playerToSpawn.transform.Find("PlayerCamera").gameObject.SetActive(true);
+        playerToSpawn.transform.Find("Canvas").gameObject.SetActive(true);
 }
 private void Update() {
 
