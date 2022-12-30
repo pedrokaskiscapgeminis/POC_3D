@@ -9,6 +9,8 @@ using TMPro;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
+
+    //Variables
     public TMP_InputField roomInputField;
     public GameObject lobbyPanel;
 
@@ -36,87 +38,44 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby();
         
     }
-    public void OnClickCreate()
+    
+    //Función para añadir jugadores a la lista de jugadores
+
+    public void AddPlayer(Player newPlayer)
     {
-        if(roomInputField.text.Length >=1)
-        {
-            PhotonNetwork.CreateRoom(roomInputField.text,new RoomOptions(){ MaxPlayers = 4, BroadcastPropsChangeToAll = true});
-            voiceChat.onJoinButtonClicked(roomInputField.text);;
-        }
+        //Instanciamos el nuevo jugador y lo añadimos a la lista de usuarios
+        PlayerItem playerItem = Instantiate(playerItemPrefab, playerItemParent); 
+        playerItem.SetPlayerInfo(newPlayer);
+
+        //??????
+           if (newPlayer == PhotonNetwork.LocalPlayer)
+           {
+            playerItem.ApplyLocalChanges();
+           }
+           playerItemsList.Add(playerItem);
+
+
     }
 
-    public override void OnJoinedRoom()
+    //Función que borra los jugadores de la lista 
+    //COMPROBAR SI LO HACE PERFECTAMENTE
+    public void DeletePlayer(Player oldPlayer)
     {
-        lobbyPanel.SetActive(false);
-        roomPanel.SetActive(true);
-        roomName.text="Room Name: " + PhotonNetwork.CurrentRoom.Name;
-        UpdatePlayerList();
-    }   
-
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-        if(Time.time >= nextT){
-            UpdateRoomList(roomList);
-            nextT = Time.time + timeBetweenUpdates;
-        }
-    }
-    void UpdateRoomList(List<RoomInfo> list)
-    {
-        foreach(RoomItem item in roomItemsList)
+         foreach(PlayerItem item in playerItemsList)
         {
+           if (item.GetPlayerInfo().UserId == oldPlayer.UserId){
             Destroy(item.gameObject);
+            playerItemsList.Remove(item);
+           }
+
         }
-        roomItemsList.Clear();
 
-        foreach(RoomInfo room in list)
-        {
-            RoomItem newRoom = Instantiate(roomItemPrefab,contentObject);
-            newRoom.SetRoomName(room.Name);
-            roomItemsList.Add(newRoom); 
-        }
-    }
-    public void JoinRoom(string roomName)
-    {
-        PhotonNetwork.JoinRoom(roomName);
-        voiceChat.onJoinButtonClicked(roomName);
-    }
-
-    public override void OnJoinRoomFailed(short returnCode, string message){
-
-        //Comprobar el error de retorno para comprobar distintos fallos
-        Debug.Log(message);
-        errorText.text = "Ya te encuentras en esa sala";
 
     }
-     public void OnClickLeaveRoom()
-    {
-     PhotonNetwork.LeaveRoom();
-     voiceChat.onLeaveButtonClicked();
-     }
-    public override void OnLeftRoom()
-    {
-        if (roomPanel != null && lobbyPanel!=null){
-        roomPanel.SetActive(false);
-        lobbyPanel.SetActive(true);
-        }
-    }
-    public override void OnConnectedToMaster()
-    {
-        PhotonNetwork.JoinLobby();
-    }
+
+    //Método cuando un usuario entra por primera vez a una sala
     void UpdatePlayerList()
     {
-        foreach(PlayerItem item in playerItemsList)
-        {
-            if (item!=null)
-            Destroy(item.gameObject);
-        }
-        playerItemsList.Clear();
-
-        if (PhotonNetwork.CurrentRoom == null)
-        {
-            return;
-        }
         foreach (KeyValuePair<int,Player> player in PhotonNetwork.CurrentRoom.Players)
         {
            PlayerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent); 
@@ -129,14 +88,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
            playerItemsList.Add(newPlayerItem);
         }
     }
+
+    
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            UpdatePlayerList();
+            AddPlayer(newPlayer);
+            //UpdatePlayerList();
         }
     public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            UpdatePlayerList();
+            //UpdatePlayerList();
+            DeletePlayer(otherPlayer);
         }
+    
     private void Update() {
         {
             if (SceneManager.GetActiveScene().name =="Lobby"){
@@ -150,8 +115,148 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void OnClickPlayButton()
+   
+
+    //Botones
+
+    //Método del botón que crea una sala.
+    public void OnClickCreate()
+    {
+        if(roomInputField.text.Length >=1)
+        {
+            PhotonNetwork.CreateRoom(roomInputField.text,new RoomOptions(){ MaxPlayers = 4, BroadcastPropsChangeToAll = true});
+        }
+    }
+
+    //Método llamado por el botón RoomItem para unirse a una sala
+    public void OnClickJoinRoom(string roomName)
+    {
+        PhotonNetwork.JoinRoom(roomName);
+    }
+
+    //Método del botón para abandonar la sala.
+     public void OnClickLeaveRoom()
+    {
+     PhotonNetwork.LeaveRoom();
+     }
+
+    //Método del botón de selección de personaje para cargar el mapa
+      public void OnClickPlayButton()
     {
         PhotonNetwork.LoadLevel("Mapa1");
     }
+
+
+
+    //Callbacks Photon
+
+
+    /*
+    **********
+
+    IMPORTANTE
+    COMO FUNCIONA CONEXIÓN PHOTON
+    MASTER SERVER (ConnectUsingSettings) -> GAME SERVER (JoinLobby) -> ROOM (JoinOrCreateRoom)
+
+    **********
+    */
+
+    //CallBack de Photon que se llama una vez de conecta al servidor principal
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby();
+    }
+
+    //CallBack de Photon que se llama cada x tiempo con nueva info de las listas.
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        //Recorremos la nueva lista con información
+        foreach (RoomInfo info in roomList)
+        {
+            //Si una sala ha sido destruida la eliminamos de la lista y de la interfaz
+            if (info.RemovedFromList)
+            {
+                int index = roomItemsList.FindIndex( x => x.RoomInfo.Name == info.Name);
+                if (index != -1)
+                {
+                    Destroy(roomItemsList[index].gameObject);
+                    roomItemsList.RemoveAt(index);
+                }
+            }
+
+            else
+            {
+                //Probar si este if hace falta.
+                if (roomItemsList.FindIndex( x => x.RoomInfo.Name == info.Name) == -1)
+                {
+            
+              //Instanciamos el item en la interfaz.
+              RoomItem newRoom = Instantiate(roomItemPrefab,contentObject);
+              if (newRoom != null)
+              {
+                newRoom.SetRoomInfo(info);
+                roomItemsList.Add(newRoom);
+              }
+                }
+
+            }
+        }
+    }
+
+    //CallBack de Photon llamado cuando el usuario se une a una sala.
+    public override void OnJoinedRoom()
+    {
+
+
+        lobbyPanel.SetActive(false);
+        roomPanel.SetActive(true);
+        roomName.text="Room Name: " + PhotonNetwork.CurrentRoom.Name;
+
+        //Método para actualizar la lista de jugadores
+
+        UpdatePlayerList();
+
+        //Destruimos la lista de rooms ya que no está actualizada y se actualizará cuando nos unamos de nuevo al Lobby.
+
+         foreach(RoomItem item in roomItemsList)
+        {
+            Destroy(item.gameObject);
+        }
+        roomItemsList.Clear();
+
+        
+    } 
+
+     //Callback para cuando falla la conexión a una sala
+    public override void OnJoinRoomFailed(short returnCode, string message){
+
+        //Comprobar el error de retorno para comprobar distintos fallos
+        Debug.Log(message);
+        errorText.text = "Ya te encuentras en esa sala";
+
+        //TO DO Hacer que sea visible o invisible
+        //TO DO Cambiar error dependiendo del codigo
+
+    }
+
+
+    //CallBack de Photon que se llama al salir de una sala
+    public override void OnLeftRoom()
+    {
+
+        //Eliminamos la lista de jugadores al salir de la sala
+
+        foreach(PlayerItem item in playerItemsList)
+        {
+            Destroy(item.gameObject);
+        }
+        playerItemsList.Clear();
+
+        //Activamos los paneles de la interfaz del Lobby.
+        roomPanel.SetActive(false);
+        lobbyPanel.SetActive(true);
+
+
+    }
+    
 }

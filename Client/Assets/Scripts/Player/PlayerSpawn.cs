@@ -38,7 +38,7 @@ private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape) && !escPul)
             {
                 Pausa.SetActive(true);
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
                 playerToSpawn.GetComponent<SC_FPSController>().enabled = false;
 
                 Cursor.visible = true;   

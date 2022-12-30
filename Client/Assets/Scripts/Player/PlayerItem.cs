@@ -33,6 +33,10 @@ public class PlayerItem : MonoBehaviourPunCallbacks
     UpdatePlayerItem(player);
    }
 
+   public Player GetPlayerInfo(){
+    return player;
+   }
+
    public void ApplyLocalChanges()
    {
     

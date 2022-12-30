@@ -55,6 +55,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
             {
                 TitleText.text = "Conectando...";
             }
+
+            
             
         }
         else
