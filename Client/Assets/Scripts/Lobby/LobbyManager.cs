@@ -44,7 +44,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         //Instanciamos el nuevo jugador y lo añadimos a la lista de usuarios
         PlayerItem playerItem = Instantiate(playerItemPrefab, playerItemParent); 
         playerItem.SetPlayerInfo(newPlayer);
-
+       
         //??????
            if (newPlayer == PhotonNetwork.LocalPlayer)
            {
@@ -62,6 +62,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
          foreach(PlayerItem item in playerItemsList)
         {
            if (item.GetPlayerInfo().UserId == oldPlayer.UserId){
+           
             Destroy(item.gameObject);
             playerItemsList.Remove(item);
            }
@@ -78,7 +79,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
            PlayerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent); 
            newPlayerItem.SetPlayerInfo(player.Value);
-
+           
            if (player.Value == PhotonNetwork.LocalPlayer)
            {
             newPlayerItem.ApplyLocalChanges();
@@ -120,7 +121,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if(roomInputField.text.Length >=1)
         {
-            PhotonNetwork.CreateRoom(roomInputField.text,new RoomOptions(){ MaxPlayers = 4, BroadcastPropsChangeToAll = true});
+            PhotonNetwork.CreateRoom(roomInputField.text,new RoomOptions(){ MaxPlayers = 4, BroadcastPropsChangeToAll = true, PublishUserId = true});
         }
     }
 
