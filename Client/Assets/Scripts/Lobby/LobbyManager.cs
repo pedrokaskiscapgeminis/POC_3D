@@ -34,7 +34,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         //LoadBalancingClient loadBalancingClient = new LoadBalancingClient(null, TurnbasedAppId, "1.0"); // the master server address is not used when connecting via nameserver
         PhotonNetwork.JoinLobby();
-        
     }
     
     //Función para añadir jugadores a la lista de jugadores
@@ -51,8 +50,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             playerItem.ApplyLocalChanges();
            }
            playerItemsList.Add(playerItem);
-
-
     }
 
     //Función que borra los jugadores de la lista 
@@ -68,8 +65,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
            }
 
         }
-
-
     }
 
     //Método cuando un usuario entra por primera vez a una sala
@@ -112,8 +107,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
-   
-
     //Botones
 
     //Método del botón que crea una sala.
@@ -132,7 +125,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
 
     //Método del botón para abandonar la sala.
-     public void OnClickLeaveRoom()
+    public void OnClickLeaveRoom()
     {
      PhotonNetwork.LeaveRoom();
      }
@@ -203,8 +196,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //CallBack de Photon llamado cuando el usuario se une a una sala.
     public override void OnJoinedRoom()
     {
-
-
         lobbyPanel.SetActive(false);
         roomPanel.SetActive(true);
         roomName.text="Room Name: " + PhotonNetwork.CurrentRoom.Name;
@@ -219,9 +210,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             Destroy(item.gameObject);
         }
-        roomItemsList.Clear();
-
-        
+        roomItemsList.Clear();    
     } 
 
      //Callback para cuando falla la conexión a una sala
