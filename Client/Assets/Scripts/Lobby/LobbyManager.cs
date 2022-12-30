@@ -10,24 +10,31 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 {
 
     //Variables
-    public TMP_InputField roomInputField;
+
+    //Paneles UI
     public GameObject lobbyPanel;
-
-    public TMP_Text errorText;
     public GameObject roomPanel;
+
+    //Inputs
+    //Input para crear una sala
+    public TMP_InputField roomInputField;
+    
+    //Text Labels
+    public TMP_Text errorText;
     public TMP_Text roomName;
-    public RoomItem roomItemPrefab;
-    List<RoomItem> roomItemsList = new List<RoomItem>();
 
-    public Transform contentObject;
-
-    public float timeBetweenUpdates = 1.5f;
-    float nextT;
-
+    //Listas
+     List<RoomItem> roomItemsList = new List<RoomItem>();
     public List<PlayerItem> playerItemsList = new List<PlayerItem>();
-    public PlayerItem playerItemPrefab;
-    public Transform playerItemParent;
 
+    //Prefabs
+
+    public RoomItem roomItemPrefab;
+    public PlayerItem playerItemPrefab;
+
+    //Otras variables
+    public Transform contentObject;
+    public Transform playerItemParent;
     public GameObject playButton;
 
     private void Start() 
@@ -37,69 +44,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         
     }
     
-    //Función para añadir jugadores a la lista de jugadores
 
-    public void AddPlayer(Player newPlayer)
-    {
-        //Instanciamos el nuevo jugador y lo añadimos a la lista de usuarios
-        PlayerItem playerItem = Instantiate(playerItemPrefab, playerItemParent); 
-        playerItem.SetPlayerInfo(newPlayer);
-       
-        //??????
-           if (newPlayer == PhotonNetwork.LocalPlayer)
-           {
-            playerItem.ApplyLocalChanges();
-           }
-           playerItemsList.Add(playerItem);
-
-
-    }
-
-    //Función que borra los jugadores de la lista 
-    //COMPROBAR SI LO HACE PERFECTAMENTE
-    public void DeletePlayer(Player oldPlayer)
-    {
-         foreach(PlayerItem item in playerItemsList)
-        {
-           if (item.GetPlayerInfo().UserId == oldPlayer.UserId){
-           
-            Destroy(item.gameObject);
-            playerItemsList.Remove(item);
-           }
-
-        }
-
-
-    }
-
-    //Método cuando un usuario entra por primera vez a una sala
-    void UpdatePlayerList()
-    {
-        foreach (KeyValuePair<int,Player> player in PhotonNetwork.CurrentRoom.Players)
-        {
-           PlayerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent); 
-           newPlayerItem.SetPlayerInfo(player.Value);
-           
-           if (player.Value == PhotonNetwork.LocalPlayer)
-           {
-            newPlayerItem.ApplyLocalChanges();
-           }
-           playerItemsList.Add(newPlayerItem);
-        }
-    }
-
-    
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-        {
-            AddPlayer(newPlayer);
-            //UpdatePlayerList();
-        }
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-        {
-            //UpdatePlayerList();
-            DeletePlayer(otherPlayer);
-        }
     
     private void Update() {
         {
@@ -141,6 +86,62 @@ public class LobbyManager : MonoBehaviourPunCallbacks
       public void OnClickPlayButton()
     {
         PhotonNetwork.LoadLevel("Mapa1");
+    }
+
+
+
+    //Funciones 
+
+     //Función para añadir jugadores a la lista de jugadores
+
+    public void AddPlayer(Player newPlayer)
+    {
+        //Instanciamos el nuevo jugador y lo añadimos a la lista de usuarios
+        PlayerItem playerItem = Instantiate(playerItemPrefab, playerItemParent); 
+        playerItem.SetPlayerInfo(newPlayer);
+       
+        //??????
+           if (newPlayer == PhotonNetwork.LocalPlayer)
+           {
+            playerItem.ApplyLocalChanges();
+           }
+           playerItemsList.Add(playerItem);
+
+
+    }
+
+    //Función que borra los jugadores de la lista 
+   
+    public void DeletePlayer(Player oldPlayer)
+    {
+        //Recorre la lista y comprueba los ID's de los usuarios para borrarlo
+         foreach(PlayerItem item in playerItemsList)
+        {
+           if (item.GetPlayerInfo().UserId == oldPlayer.UserId){
+           
+            Destroy(item.gameObject);
+            playerItemsList.Remove(item);
+           }
+
+        }
+
+
+    }
+
+    //Método cuando un usuario entra por primera vez a una sala
+    void UpdatePlayerList()
+    {
+        foreach (KeyValuePair<int,Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+           PlayerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent); 
+           newPlayerItem.SetPlayerInfo(player.Value);
+           
+           if (player.Value == PhotonNetwork.LocalPlayer)
+           {
+            newPlayerItem.ApplyLocalChanges();
+           }
+           playerItemsList.Add(newPlayerItem);
+        }
     }
 
 
@@ -254,6 +255,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         lobbyPanel.SetActive(true);
 
 
+
     }
+
+
+        //CallBack de Photon cuando un jugador entra en la sala
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+        {
+            AddPlayer(newPlayer);
+            //UpdatePlayerList();
+        }
+
+    //CallBack de Photon cuando un jugador deja la sala.
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+            //UpdatePlayerList();
+            DeletePlayer(otherPlayer);
+        }
     
 }
