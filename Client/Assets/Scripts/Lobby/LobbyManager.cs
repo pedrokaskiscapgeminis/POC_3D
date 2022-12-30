@@ -82,6 +82,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //Método del botón de selección de personaje para cargar el mapa
       public void OnClickPlayButton()
     {
+
         PhotonNetwork.LoadLevel("Mapa1");
     }
 
@@ -102,6 +103,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
            {
             playerItem.ApplyLocalChanges();
            }
+
            playerItemsList.Add(playerItem);
 
 
@@ -121,8 +123,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
            }
 
         }
-
-
     }
 
     //Método cuando un usuario entra por primera vez a una sala
@@ -132,12 +132,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
            PlayerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent); 
            newPlayerItem.SetPlayerInfo(player.Value);
-           
-           if (player.Value == PhotonNetwork.LocalPlayer)
-           {
-            newPlayerItem.ApplyLocalChanges();
-           }
-           playerItemsList.Add(newPlayerItem);
+
+            if (player.Value == PhotonNetwork.LocalPlayer)
+            {
+                newPlayerItem.ApplyLocalChanges();
+            }
+
+            playerItemsList.Add(newPlayerItem);
         }
     }
 
@@ -204,6 +205,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         lobbyPanel.SetActive(false);
         roomPanel.SetActive(true);
         roomName.text="Room Name: " + PhotonNetwork.CurrentRoom.Name;
+        PhotonNetwork.SetPlayerCustomProperties(null);
 
         //Método para actualizar la lista de jugadores
 

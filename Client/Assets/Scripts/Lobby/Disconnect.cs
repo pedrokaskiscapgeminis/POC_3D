@@ -32,11 +32,5 @@ public class Disconnect : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster(){
       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
-
-
-
-
-   
-   
 }
             

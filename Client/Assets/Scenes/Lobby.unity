@@ -2201,16 +2201,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a0521ed26769444b68238f40f7f359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomInputField: {fileID: 1566258455}
   lobbyPanel: {fileID: 385119111}
-  errorText: {fileID: 606129895}
   roomPanel: {fileID: 119749431}
+  roomInputField: {fileID: 1566258455}
+  errorText: {fileID: 606129895}
   roomName: {fileID: 628324908}
-  roomItemPrefab: {fileID: 8922691446385320113, guid: 55d0b644a90a14240882d68456f289a8, type: 3}
-  contentObject: {fileID: 1644937402}
-  timeBetweenUpdates: 1.5
   playerItemsList: []
+  roomItemPrefab: {fileID: 8922691446385320113, guid: 55d0b644a90a14240882d68456f289a8, type: 3}
   playerItemPrefab: {fileID: 2092567773323835745, guid: 4a4143cc9112a434082be24511d92ced, type: 3}
+  contentObject: {fileID: 1644937402}
   playerItemParent: {fileID: 916206103}
   playButton: {fileID: 109756424}
 --- !u!1 &1315910545

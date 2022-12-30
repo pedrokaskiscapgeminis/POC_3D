@@ -5,8 +5,9 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
-public class PlayerSpawn : MonoBehaviour
+public class PlayerSpawn : MonoBehaviourPunCallbacks
 {
     private Estados estado;
     public GameObject[] playerPrefabs;
@@ -22,13 +23,26 @@ public class PlayerSpawn : MonoBehaviour
         escPul=false;
         int randomNumber = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[randomNumber];
-
-        playerToSpawn = playerPrefabs[(int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"]];
-        playerToSpawn = (GameObject) PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, Quaternion.identity);
-
-        playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
-        playerToSpawn.transform.Find("PlayerCamera").gameObject.SetActive(true);
+        
+        if(PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == null)
+        {
+            Debug.Log("Avatar no seleccionado");
+            PhotonNetwork.LeaveRoom();
+        }
+        else
+        {
+            playerToSpawn = playerPrefabs[(int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"]];
+            playerToSpawn = (GameObject) PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, Quaternion.identity);
+            playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
+            playerToSpawn.transform.Find("PlayerCamera").gameObject.SetActive(true);
+        }
 }
+
+public override void OnConnectedToMaster()
+{
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+}
+
 private void Update() {
 
     //Estado Juego
