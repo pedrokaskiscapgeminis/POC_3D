@@ -125,6 +125,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if(roomInputField.text.Length >=1)
         {
             PhotonNetwork.CreateRoom(roomInputField.text,new RoomOptions(){ MaxPlayers = 4, BroadcastPropsChangeToAll = true});
+            voiceChat.onJoinButtonClicked(roomInputField.text);
         }
     }
 
@@ -132,12 +133,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void OnClickJoinRoom(string roomName)
     {
         PhotonNetwork.JoinRoom(roomName);
+        voiceChat.onJoinButtonClicked(roomName);
     }
 
     //Método del botón para abandonar la sala.
      public void OnClickLeaveRoom()
     {
      PhotonNetwork.LeaveRoom();
+     voiceChat.onLeaveButtonClicked();
      }
 
     //Método del botón de selección de personaje para cargar el mapa
@@ -206,8 +209,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //CallBack de Photon llamado cuando el usuario se une a una sala.
     public override void OnJoinedRoom()
     {
-
-
         lobbyPanel.SetActive(false);
         roomPanel.SetActive(true);
         roomName.text="Room Name: " + PhotonNetwork.CurrentRoom.Name;
