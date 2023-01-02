@@ -49,11 +49,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     
     private void Update() {
         {
-            if(PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= 1)
-            {
-                playButton.SetActive(true);
-            }else{
-                playButton.SetActive(false);
+            if (playButton!=null){
+                if(PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= 1)
+                {
+                    playButton.SetActive(true);
+                }else{
+                    playButton.SetActive(false);
+                }
             }
         }
     }
@@ -66,6 +68,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if(roomInputField.text.Length >=1)
         {
             PhotonNetwork.CreateRoom(roomInputField.text,new RoomOptions(){ MaxPlayers = 4, BroadcastPropsChangeToAll = true, PublishUserId = true});
+            voiceChat.onJoinButtonClicked(roomInputField.text);
         }
     }
 
@@ -73,12 +76,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void OnClickJoinRoom(string roomName)
     {
         PhotonNetwork.JoinRoom(roomName);
+        voiceChat.onJoinButtonClicked(roomName);
     }
 
     //Método del botón para abandonar la sala.
     public void OnClickLeaveRoom()
     {
      PhotonNetwork.LeaveRoom();
+     voiceChat.onLeaveButtonClicked();
      }
 
     //Método del botón de selección de personaje para cargar el mapa
@@ -243,6 +248,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         foreach(PlayerItem item in playerItemsList)
         {
+            if (item!=null)
             Destroy(item.gameObject);
         }
         playerItemsList.Clear();

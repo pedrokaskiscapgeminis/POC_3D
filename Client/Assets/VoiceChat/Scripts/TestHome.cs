@@ -103,8 +103,6 @@ public class TestHome : MonoBehaviour
 
         // join channel and jump to next scene
         app.join(ChannelName, muted);
-        SceneManager.sceneLoaded += OnLevelFinishedLoading; // configure GameObject after scene is loaded
-        //SceneManager.LoadScene(PlaySceneName, LoadSceneMode.Single);
     }
 
     public void onLeaveButtonClicked()
@@ -114,20 +112,6 @@ public class TestHome : MonoBehaviour
             app.leave(); // leave channel
             app.unloadEngine(); // delete engine
             app = null; // delete app
-            //SceneManager.LoadScene(HomeSceneName, LoadSceneMode.Single);
-        }
-        // Destroy(gameObject);
-    }
-
-    public void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-    {
-        if (PlaySceneName.Contains(scene.name))
-        {
-            if (!ReferenceEquals(app, null))
-            {
-                app.onSceneHelloVideoLoaded(); // call this after scene is loaded
-            }
-            SceneManager.sceneLoaded -= OnLevelFinishedLoading;
         }
     }
 

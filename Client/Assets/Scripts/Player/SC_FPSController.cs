@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class SC_FPSController : MonoBehaviour
 {
-    // [SerializeField] private Canvas myCanvas;
-    // [SerializeField] PhotonView myPhotonView;
     public float walkingSpeed = 7.5f;
     public float runningSpeed = 11.5f;
     public float jumpSpeed = 8.0f;
@@ -30,11 +28,6 @@ public class SC_FPSController : MonoBehaviour
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        // myPhotonView = GetComponent<PhotonView>();
-        // if (!myPhotonView.IsMine){
-        //     myCanvas.enabled=false;
-        // }
     }
 
     void Update()
