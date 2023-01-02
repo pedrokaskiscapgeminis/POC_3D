@@ -35,7 +35,8 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
             playerToSpawn = (GameObject) PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, Quaternion.identity);
             playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
             playerToSpawn.transform.Find("PlayerCamera").gameObject.SetActive(true);
-        }
+            playerToSpawn.transform.Find("PlayerUIPrefab").gameObject.SetActive(true);
+}
 }
 
 public override void OnConnectedToMaster()
