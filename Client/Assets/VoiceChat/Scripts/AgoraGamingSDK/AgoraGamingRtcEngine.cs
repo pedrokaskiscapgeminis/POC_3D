@@ -222,7 +222,6 @@ namespace agora_gaming_rtc
 
         #endregion  set callback here for user
 
-        private readonly AudioEffectManagerImpl mAudioEffectM;
         private readonly AudioRecordingDeviceManager audioRecordingDeviceManager;
         private readonly AudioPlaybackDeviceManager audioPlaybackDeviceManager;
         private readonly VideoDeviceManager videoDeviceManager;
@@ -251,11 +250,9 @@ namespace agora_gaming_rtc
 
             audioRecordingDeviceManager = AudioRecordingDeviceManager.GetInstance(this);
             videoDeviceManager = VideoDeviceManager.GetInstance(this);
-            mAudioEffectM = AudioEffectManagerImpl.GetInstance(this);
             audioPlaybackDeviceManager = AudioPlaybackDeviceManager.GetInstance(this);
             videoDeviceManager = VideoDeviceManager.GetInstance(this);
 #else
-            mAudioEffectM = AudioEffectManagerImpl.GetInstance(this);
             audioRecordingDeviceManager = AudioRecordingDeviceManager.GetInstance(this);
             audioPlaybackDeviceManager = AudioPlaybackDeviceManager.GetInstance(this);
             videoDeviceManager = VideoDeviceManager.GetInstance(this);
@@ -289,7 +286,6 @@ namespace agora_gaming_rtc
                 Debug.LogError("Create engine failed, error code: " + retCode);
                 initStatus = false;
             }
-            mAudioEffectM = AudioEffectManagerImpl.GetInstance(this);
             audioRecordingDeviceManager = AudioRecordingDeviceManager.GetInstance(this);
             audioPlaybackDeviceManager = AudioPlaybackDeviceManager.GetInstance(this);
             videoDeviceManager = VideoDeviceManager.GetInstance(this);
@@ -1709,10 +1705,10 @@ namespace agora_gaming_rtc
          *
          * @return The AudioEffectManagerImpl object.
          */
-        public IAudioEffectManager GetAudioEffectManager()
-        {
-            return mAudioEffectM;
-        }
+        // public IAudioEffectManager GetAudioEffectManager()
+        // {
+        //     return mAudioEffectM;
+        // }
 
         /** Retrieves the AudioRecordingDeviceManager object.
          *
@@ -5505,14 +5501,6 @@ namespace agora_gaming_rtc
         {
             if (instance != null)
             {
-                // break the connection with mAudioEffectM
-                AudioEffectManagerImpl am = (AudioEffectManagerImpl)instance.GetAudioEffectManager();
-                if (am != null)
-                {
-                    am.SetEngine(null);
-                    AudioEffectManagerImpl.ReleaseInstance();
-                }
-
                 AudioRecordingDeviceManager adm = (AudioRecordingDeviceManager)instance.GetAudioRecordingDeviceManager();
                 if (adm != null)
                 {

@@ -110,12 +110,6 @@ public class TestHelloUnityVideo
         }
     }
 
-    public string getSdkVersion()
-    {
-        string ver = IRtcEngine.GetSdkVersion();
-        return ver;
-    }
-
     public void leave()
     {
         Debug.Log("calling leave");
@@ -140,18 +134,7 @@ public class TestHelloUnityVideo
         }
     }
 
-    // accessing GameObject in Scene1
-    // set video transform delegate for statically created GameObject
-    public void onSceneHelloVideoLoaded()
-    {
-        GameObject text = GameObject.Find("MessageText");
-        if (!ReferenceEquals(text, null))
-        {
-            MessageText = text.GetComponent<Text>();
-        }
-
-    }
-
+    // changes the state of the audio
     public void MuteAudio(string activeScene){
         if (AudioVideoState.pubAudio == true){
             mRtcEngine.MuteLocalAudioStream(true);
