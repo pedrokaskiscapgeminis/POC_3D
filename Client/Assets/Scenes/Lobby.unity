@@ -315,7 +315,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 150}
+  m_SizeDelta: {x: 320, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &62804791
 MonoBehaviour:
@@ -1669,7 +1669,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 150}
+  m_SizeDelta: {x: 320, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &825375220
 MonoBehaviour:
@@ -2448,7 +2448,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.13333334, g: 0.6392157, b: 0.62352943, a: 0.78431374}
-    m_PressedColor: {r: 0.38314345, g: 0.7735849, b: 0.38566968, a: 1}
+    m_PressedColor: {r: 0.13333334, g: 0.6392157, b: 0.62352943, a: 0.8235294}
     m_SelectedColor: {r: 0.38431373, g: 0.77254903, b: 0.38431373, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
