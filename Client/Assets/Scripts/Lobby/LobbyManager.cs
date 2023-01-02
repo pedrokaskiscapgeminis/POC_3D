@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -24,7 +25,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public TMP_Text roomName;
 
     //Listas
-     List<RoomItem> roomItemsList = new List<RoomItem>();
+     public TestHome voiceChat;
+    List<RoomItem> roomItemsList = new List<RoomItem>();
     public List<PlayerItem> playerItemsList = new List<PlayerItem>();
 
     //Prefabs
