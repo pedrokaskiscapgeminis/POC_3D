@@ -112,6 +112,7 @@ public class TestHome : MonoBehaviour
             app.leave(); // leave channel
             app.unloadEngine(); // delete engine
             app = null; // delete app
+            Destroy(this.gameObject);
         }
     }
 
@@ -120,6 +121,7 @@ public class TestHome : MonoBehaviour
         if (!ReferenceEquals(app, null))
         {
             app.unloadEngine();
+            Destroy(this.gameObject);
         }
     }
 }

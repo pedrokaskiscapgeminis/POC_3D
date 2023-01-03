@@ -25,7 +25,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public TMP_Text roomName;
 
     //Voice Chat
-    public TestHome voiceChat;
+    private TestHome voiceChat;
 
     //Listas
     List<RoomItem> roomItemsList = new List<RoomItem>();
@@ -45,6 +45,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         //LoadBalancingClient loadBalancingClient = new LoadBalancingClient(null, TurnbasedAppId, "1.0"); // the master server address is not used when connecting via nameserver
         PhotonNetwork.JoinLobby();
+        voiceChat = GameObject.Find("VoiceManager").GetComponent<TestHome>();
     }
     
 
@@ -91,11 +92,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //Método del botón de selección de personaje para cargar el mapa
       public void OnClickPlayButton()
     {
-
         PhotonNetwork.LoadLevel("Mapa1");
     }
-
-
 
     //Funciones 
 
