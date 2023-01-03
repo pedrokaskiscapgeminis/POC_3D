@@ -43,6 +43,7 @@ public class TestHome : MonoBehaviour
     void Start()
     {
         CheckAppId();
+        CheckRoomPanel();
     }
 
     void Update()
@@ -55,6 +56,10 @@ public class TestHome : MonoBehaviour
         }
     }
 
+    private void CheckRoomPanel(){
+        if (roomPanel == null)
+            Destroy(this.gameObject);
+    }
     private void CheckAppId()
     {
         Debug.Assert(AppID.Length > 10, "Please fill in your AppId first on Game Controller object.");
@@ -112,6 +117,7 @@ public class TestHome : MonoBehaviour
             app.leave(); // leave channel
             app.unloadEngine(); // delete engine
             app = null; // delete app
+            SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
             Destroy(this.gameObject);
         }
     }
@@ -121,6 +127,7 @@ public class TestHome : MonoBehaviour
         if (!ReferenceEquals(app, null))
         {
             app.unloadEngine();
+            SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
             Destroy(this.gameObject);
         }
     }

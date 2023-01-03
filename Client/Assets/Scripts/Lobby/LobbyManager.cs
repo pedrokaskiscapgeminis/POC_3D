@@ -25,6 +25,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public TMP_Text roomName;
 
     //Voice Chat
+    private GameObject voiceChatGameObject;
     private TestHome voiceChat;
 
     //Listas
@@ -45,7 +46,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         //LoadBalancingClient loadBalancingClient = new LoadBalancingClient(null, TurnbasedAppId, "1.0"); // the master server address is not used when connecting via nameserver
         PhotonNetwork.JoinLobby();
-        voiceChat = GameObject.Find("VoiceManager").GetComponent<TestHome>();
+
+        //find voice chat script
+        voiceChat=GameObject.Find("VoiceManager").GetComponent<TestHome>();
     }
     
 
