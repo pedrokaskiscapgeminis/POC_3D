@@ -13,6 +13,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
     public GameObject[] playerPrefabs;
     public Transform[] spawnPoints;
     public GameObject Pausa;
+    public GameObject Settings;
     bool escPul;
 
     GameObject playerToSpawn;
@@ -51,6 +52,7 @@ private void Update() {
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !escPul)
             {
+                Settings.SetActive(false);
                 Pausa.SetActive(true);
                 //Time.timeScale = 0;
                 playerToSpawn.GetComponent<SC_FPSController>().enabled = false;

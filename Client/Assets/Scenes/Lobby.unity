@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -699,9 +699,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
+    m_HighlightedColor: {r: 0.13333334, g: 0.6392157, b: 0.62352943, a: 0.78431374}
+    m_PressedColor: {r: 0.07058824, g: 0.67058825, b: 1, a: 0.8235294}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2188,8 +2188,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0, g: 0.4392157, b: 0.6784314, a: 0.78431374}
-    m_PressedColor: {r: 0, g: 0.4392157, b: 0.6784314, a: 1}
+    m_HighlightedColor: {r: 0.13333334, g: 0.6392157, b: 0.62352943, a: 0.78431374}
+    m_PressedColor: {r: 0.38431373, g: 0.77254903, b: 0.38431373, a: 0.8235294}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2309,7 +2309,6 @@ MonoBehaviour:
   roomInputField: {fileID: 1566258455}
   errorText: {fileID: 606129895}
   roomName: {fileID: 628324908}
-  voiceChat: {fileID: 0}
   playerItemsList: []
   roomItemPrefab: {fileID: 8922691446385320113, guid: 55d0b644a90a14240882d68456f289a8, type: 3}
   playerItemPrefab: {fileID: 2092567773323835745, guid: 4a4143cc9112a434082be24511d92ced, type: 3}
@@ -2551,8 +2550,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.13333334, g: 0.6392157, b: 0.62352943, a: 0.78431374}
-    m_PressedColor: {r: 0.13333334, g: 0.6392157, b: 0.62352943, a: 0.8235294}
+    m_HighlightedColor: {r: 0.07058824, g: 0.67058825, b: 1, a: 0.78431374}
+    m_PressedColor: {r: 0.07058824, g: 0.67058825, b: 1, a: 0.8235294}
     m_SelectedColor: {r: 0.38431373, g: 0.77254903, b: 0.38431373, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2688,9 +2687,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
+    m_HighlightedColor: {r: 0.7529412, g: 0.21568628, b: 0.18039216, a: 0.78431374}
+    m_PressedColor: {r: 0.7529412, g: 0.21568628, b: 0.18039215, a: 0.92156863}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -3105,8 +3104,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0, g: 0.4392157, b: 0.6784314, a: 0.78431374}
-    m_PressedColor: {r: 0, g: 0.4392157, b: 0.6784314, a: 1}
+    m_HighlightedColor: {r: 0.13333334, g: 0.6392157, b: 0.62352943, a: 0.78431374}
+    m_PressedColor: {r: 0, g: 0.4392157, b: 0.6784314, a: 0.8235294}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1

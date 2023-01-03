@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using TMPro;
 using Photon.Realtime;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Disconnect : MonoBehaviourPunCallbacks
 {
   
+    public GameObject Settings;
+    public GameObject Pausa;
     //Voice Chat
     private TestHome voiceChat;
 
@@ -24,12 +26,16 @@ public class Disconnect : MonoBehaviourPunCallbacks
         Application.Quit();
     }
 
+    public void OnClickSettings()
+    {   
+        Pausa.SetActive(false);
+        Settings.SetActive(true);
+    }
+
       public void OnClickReturnLobby()
     {
-      //PhotonNetwork.AutomaticallySyncScene = false;
       PhotonNetwork.LeaveRoom();
       voiceChat.onLeaveButtonClicked();
-      //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     public override void OnLeftRoom()
