@@ -8945,6 +8945,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5587160887741390800, guid: 1d2efe467d6d3b84d9080797b07e66a4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587160887741390800, guid: 1d2efe467d6d3b84d9080797b07e66a4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587160887741390800, guid: 1d2efe467d6d3b84d9080797b07e66a4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1738651827}
+    - target: {fileID: 5587160887741390800, guid: 1d2efe467d6d3b84d9080797b07e66a4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587160887741390800, guid: 1d2efe467d6d3b84d9080797b07e66a4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickBackToPause
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587160887741390800, guid: 1d2efe467d6d3b84d9080797b07e66a4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Disconnect, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587160887741390800, guid: 1d2efe467d6d3b84d9080797b07e66a4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5587160888046633709, guid: 1d2efe467d6d3b84d9080797b07e66a4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.57

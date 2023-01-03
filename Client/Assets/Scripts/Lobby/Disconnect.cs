@@ -28,8 +28,14 @@ public class Disconnect : MonoBehaviourPunCallbacks
 
     public void OnClickSettings()
     {   
-        Pausa.SetActive(false);
-        Settings.SetActive(true);
+      Pausa.SetActive(false);
+      Settings.SetActive(true);
+    }
+
+    public void OnClickBackToPause()
+    {   
+      Pausa.SetActive(true);
+      Settings.SetActive(false);
     }
 
       public void OnClickReturnLobby()

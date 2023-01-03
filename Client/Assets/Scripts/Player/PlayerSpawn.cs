@@ -47,12 +47,11 @@ public override void OnConnectedToMaster()
 
 private void Update() {
 
-    //Estado Juego
+    //Estado pausa
     if (estado == Estados.Juego)
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !escPul)
             {
-                Settings.SetActive(false);
                 Pausa.SetActive(true);
                 //Time.timeScale = 0;
                 playerToSpawn.GetComponent<SC_FPSController>().enabled = false;
@@ -67,11 +66,12 @@ private void Update() {
     
     if (!Input.GetKeyDown(KeyCode.Escape)) escPul=false; // Detecta si no está pulsado
 
-    //Estado pausa
+    //Estado juego
     if (estado == Estados.Pausa)
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !escPul)
         {
+            Settings.SetActive(false);
             Pausa.SetActive(false);
             Time.timeScale = 1;
             playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
