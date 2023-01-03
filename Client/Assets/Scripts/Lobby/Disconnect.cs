@@ -9,9 +9,14 @@ using Photon.Realtime;
 
 public class Disconnect : MonoBehaviourPunCallbacks
 {
+  
+    //Voice Chat
+    public TestHome voiceChat;
+
     public void OnClickDisconnect()
-    {
+    {   
         PhotonNetwork.Disconnect();
+        voiceChat.OnApplicationQuit();
         Application.Quit();
     }
 
@@ -19,14 +24,13 @@ public class Disconnect : MonoBehaviourPunCallbacks
     {
       //PhotonNetwork.AutomaticallySyncScene = false;
       PhotonNetwork.LeaveRoom();
+      voiceChat.onLeaveButtonClicked();
       //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     public override void OnLeftRoom()
     {
       Debug.Log("Leaving");
-
-
     }
 
     public override void OnConnectedToMaster(){

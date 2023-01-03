@@ -115,7 +115,7 @@ public class TestHome : MonoBehaviour
         }
     }
 
-    void OnApplicationQuit()
+    public void OnApplicationQuit()
     {
         if (!ReferenceEquals(app, null))
         {

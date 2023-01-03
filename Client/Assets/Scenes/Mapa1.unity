@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9751,6 +9751,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.94509804
       objectReference: {fileID: 0}
+    - target: {fileID: 2095543376706389881, guid: 556983b212072f64985b2e370fc7bff7, type: 3}
+      propertyPath: voiceChat
+      value: 
+      objectReference: {fileID: 1422397283}
     - target: {fileID: 2095543376706389882, guid: 556983b212072f64985b2e370fc7bff7, type: 3}
       propertyPath: m_Name
       value: PauseMenu
@@ -9925,6 +9929,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &1422397283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422397280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d379303221dd7459c4b31d1b17fe18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomPanel: {fileID: 0}
+  AppID: 9ac0ede739e54169b8740abe3df7132f
 --- !u!1001 &1472973299
 PrefabInstance:
   m_ObjectHideFlags: 0

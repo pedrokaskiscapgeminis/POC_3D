@@ -24,8 +24,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public TMP_Text errorText;
     public TMP_Text roomName;
 
+    //Voice Chat
+    public TestHome voiceChat;
+
     //Listas
-     public TestHome voiceChat;
     List<RoomItem> roomItemsList = new List<RoomItem>();
     public List<PlayerItem> playerItemsList = new List<PlayerItem>();
 
@@ -254,9 +256,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         playerItemsList.Clear();
 
         //Activamos los paneles de la interfaz del Lobby.
-        roomPanel.SetActive(false);
-        lobbyPanel.SetActive(true);
-
+        if (roomPanel!=null & lobbyPanel!=null){
+            roomPanel.SetActive(false);
+            lobbyPanel.SetActive(true);
+        }
 
 
     }
