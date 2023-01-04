@@ -160,12 +160,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         //Instanciamos el nuevo jugador y lo añadimos a la lista de usuarios
         PlayerItem playerItem = Instantiate(playerItemPrefab, playerItemParent); 
-        playerItem.InicializePlayerInfo(newPlayer);
+        playerItem.SetPlayerInfo(newPlayer);
        
-        //??????
+        //Establece(solo para el jugador de la sesion y no para los demas en la sala) las flechas visibles para poder seleccionar el avatar en el selectior
            if (newPlayer == PhotonNetwork.LocalPlayer)
            {
-            playerItem.ApplyLocalChanges();
+            playerItem.ApplyLocalChanges();//Metodo de PlayerItem.cs, unicamente hace un SetActive(true) en las flechas de seleccion
            }
 
            playerItemsList.Add(playerItem);
