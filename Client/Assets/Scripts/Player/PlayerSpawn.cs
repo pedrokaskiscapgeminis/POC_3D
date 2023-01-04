@@ -25,7 +25,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
         int randomNumber = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[randomNumber];
         
-        if(PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == null)
+        if(PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == null || (int) PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == 6)
         {
             Debug.Log("Avatar no seleccionado");
             PhotonNetwork.LeaveRoom();

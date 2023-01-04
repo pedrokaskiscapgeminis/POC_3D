@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class PlayerItem : MonoBehaviourPunCallbacks
 {
    public TMP_Text playerName;
-   Image backgroundImage;
    public Color highlightColor;
 
    public GameObject leftArrowButton;
@@ -22,8 +21,15 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 
    private void Start()
    {
-    backgroundImage = GetComponent<Image>();
-    playerProperties["playerAvatar"] = 0;
+    playerProperties["playerAvatar"] = 6;
+   }
+
+   public void InicializePlayerInfo(Player _player)
+   {
+    playerName.text = _player.NickName;
+    player = _player;
+    playerProperties["playerAvatar"]  = (int)player.CustomProperties["playerAvatar"];
+    playerProperties["playerAvatar"] = 6;
    }
 
    public void SetPlayerInfo(Player _player)
@@ -83,7 +89,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         playerProperties["PlayerAvatar"] = (int)player.CustomProperties["playerAvatar"];
     }else
     {
-        playerProperties["playerAvatar"] = 0;
+        playerProperties["playerAvatar"] = 6;
     }
    }
 } 

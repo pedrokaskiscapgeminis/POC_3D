@@ -44,7 +44,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Start() 
     {
-        //LoadBalancingClient loadBalancingClient = new LoadBalancingClient(null, TurnbasedAppId, "1.0"); // the master server address is not used when connecting via nameserver
         PhotonNetwork.JoinLobby();
 
         //find voice chat script
@@ -100,13 +99,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     //Funciones 
 
-     //Función para añadir jugadores a la lista de jugadores
+     //Función para añadir jugadores a la lista de jugadores que ya estan dentro de la sala
 
     public void AddPlayer(Player newPlayer)
     {
         //Instanciamos el nuevo jugador y lo añadimos a la lista de usuarios
         PlayerItem playerItem = Instantiate(playerItemPrefab, playerItemParent); 
-        playerItem.SetPlayerInfo(newPlayer);
+        playerItem.InicializePlayerInfo(newPlayer);
        
         //??????
            if (newPlayer == PhotonNetwork.LocalPlayer)
@@ -115,8 +114,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
            }
 
            playerItemsList.Add(playerItem);
-
-
     }
 
     //Función que borra los jugadores de la lista 
@@ -135,13 +132,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
-    //Método cuando un usuario entra por primera vez a una sala
+    //Método cuando un usuario entra a una sala, le actualiza la lista de jugadores ya en sala
     void UpdatePlayerList()
     {
         foreach (KeyValuePair<int,Player> player in PhotonNetwork.CurrentRoom.Players)
         {
            PlayerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent); 
-           newPlayerItem.SetPlayerInfo(player.Value);
+           newPlayerItem.InicializePlayerInfo(player.Value);
 
             if (player.Value == PhotonNetwork.LocalPlayer)
             {
@@ -217,6 +214,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         roomName.text="Room Name: " + PhotonNetwork.CurrentRoom.Name;
         PhotonNetwork.SetPlayerCustomProperties(null);
 
+        Debug.Log("NULL -----------------------------------------------------");
+
         //Método para actualizar la lista de jugadores
 
         UpdatePlayerList();
@@ -270,13 +269,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
         {
             AddPlayer(newPlayer);
-            //UpdatePlayerList();
         }
 
     //CallBack de Photon cuando un jugador deja la sala.
     public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            //UpdatePlayerList();
             DeletePlayer(otherPlayer);
         }
     
