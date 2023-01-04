@@ -4,10 +4,11 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using ExitGames.Client.Photon;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class PlayerSpawn : MonoBehaviourPunCallbacks
+public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
 {
     private Estados estado;
     private TestHome voiceChat;
@@ -42,6 +43,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
             playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
             playerToSpawn.transform.Find("PlayerCamera").gameObject.SetActive(true);
             playerToSpawn.transform.Find("PlayerUIPrefab").gameObject.SetActive(true);
+            PhotonNetwork.IsMessageQueueRunning = true;
 }
 }
 
@@ -93,4 +95,15 @@ private void Update() {
         Juego,
         Pausa
     }
+
+//Recibir eventos
+public void OnEvent(EventData photonEvent)
+{
+   if(photonEvent.Code == 1)
+   {
+
+   PhotonNetwork.IsMessageQueueRunning = false;
+   PhotonNetwork.LoadLevel("Mapa1");
+   }
+}
 }

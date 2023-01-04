@@ -4,10 +4,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 using UnityEngine.UI;
 using TMPro;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class LobbyManager : MonoBehaviourPunCallbacks
+public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
 
     //Variables
@@ -51,15 +53,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     
 
     
-    private void Update() {
+     private void Update() {
         {
-            if (playButton!=null){
-                if(PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= 1)
-                {
-                    playButton.SetActive(true);
-                }else{
-                    playButton.SetActive(false);
-                }
+            if (PhotonNetwork.CurrentRoom != null )
+             
+             if (PhotonNetwork.IsMasterClient || (bool) PhotonNetwork.CurrentRoom.CustomProperties["Init"])
+            {
+                playButton.SetActive(true);
+            }else{
+                playButton.SetActive(false);
             }
         }
     }
@@ -71,7 +73,24 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if(roomInputField.text.Length >=1)
         {
-            PhotonNetwork.CreateRoom(roomInputField.text,new RoomOptions(){ MaxPlayers = 4, BroadcastPropsChangeToAll = true, PublishUserId = true});
+
+            //Opciones personalizadas de la sala
+
+            Hashtable customSettings = new Hashtable();
+
+            //Mapa
+            customSettings.Add("Map", 1);
+            customSettings.Add("Init",false);
+
+
+            //Creamos opciones de la sala
+
+            RoomOptions opciones = new RoomOptions(){MaxPlayers = 4, BroadcastPropsChangeToAll = true, PublishUserId = true, CustomRoomProperties = customSettings};
+
+
+
+
+            PhotonNetwork.CreateRoom(roomInputField.text, opciones);
             voiceChat.onJoinButtonClicked(roomInputField.text);
         }
     }
@@ -93,7 +112,44 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //Método del botón de selección de personaje para cargar el mapa
       public void OnClickPlayButton()
     {
-        PhotonNetwork.LoadLevel("Mapa1");
+        
+
+        //Si es el cliente principal envía un evento a los demás para que se sincronicen
+        if (PhotonNetwork.IsMasterClient)
+        {
+
+            //Cambiamos la sala a empezada
+
+            Hashtable customSettings = PhotonNetwork.CurrentRoom.CustomProperties;
+            customSettings["Init"] = true;
+            PhotonNetwork.CurrentRoom.SetCustomProperties(customSettings);
+
+            Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties["Init"]);
+
+            //Enviamos el evento
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            PhotonNetwork.RaiseEvent(2, "", raiseEventOptions, SendOptions.SendReliable);
+        }
+        else
+        {
+
+
+      
+           //Envíamos evento si nos unimos después 
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+            PhotonNetwork.RaiseEvent(1, "", raiseEventOptions, SendOptions.SendReliable);
+             
+            PhotonNetwork.IsMessageQueueRunning = false;
+            PhotonNetwork.LoadLevel("Mapa1");
+        }
+            
+
+
+
+
+
+
+
     }
 
     //Funciones 
@@ -275,5 +331,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             DeletePlayer(otherPlayer);
         }
+
+
+public void OnEvent(EventData photonEvent)
+{
+   if(photonEvent.Code == 2)
+   {
+
+
+            PhotonNetwork.IsMessageQueueRunning = false;
+            PhotonNetwork.LoadLevel("Mapa1");
+   }
+}
     
 }
