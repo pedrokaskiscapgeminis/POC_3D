@@ -464,7 +464,7 @@ class ClientManager {
           localTracks.audioTrack._deviceName
       );
     }
-    event_manager.raiseGetCurrentVideoDevice();
+    // event_manager.raiseGetCurrentVideoDevice();
     event_manager.raiseGetCurrentAudioDevice();
     event_manager.raiseGetCurrentPlayBackDevice();
 
