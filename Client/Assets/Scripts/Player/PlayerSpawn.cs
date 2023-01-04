@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public class PlayerSpawn : MonoBehaviourPunCallbacks
 {
     private Estados estado;
+    private TestHome voiceChat;
     public GameObject[] playerPrefabs;
     public Transform[] spawnPoints;
     public GameObject Pausa;
@@ -29,6 +30,10 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
         {
             Debug.Log("Avatar no seleccionado");
             PhotonNetwork.LeaveRoom();
+
+            //Stop voice chat
+            voiceChat=GameObject.Find("VoiceManager").GetComponent<TestHome>();
+            voiceChat.onLeaveButtonClicked();
         }
         else
         {

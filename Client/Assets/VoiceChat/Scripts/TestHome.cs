@@ -117,8 +117,10 @@ public class TestHome : MonoBehaviour
             app.leave(); // leave channel
             app.unloadEngine(); // delete engine
             app = null; // delete app
-            SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
-            Destroy(this.gameObject);
+            if (SceneManager.GetActiveScene().name!="Lobby"){
+                    SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
+                    Destroy(this.gameObject);
+            }
         }
     }
 

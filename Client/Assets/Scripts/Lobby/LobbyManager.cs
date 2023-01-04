@@ -25,7 +25,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public TMP_Text roomName;
 
     //Voice Chat
-    private GameObject voiceChatGameObject;
     private TestHome voiceChat;
 
     //Listas
