@@ -9,7 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class Disconnect : MonoBehaviourPunCallbacks
 {
-  
+
+    ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
     public GameObject Settings;
     public GameObject Pausa;
     //Voice Chat
@@ -47,10 +48,12 @@ public class Disconnect : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
       Debug.Log("Leaving");
+      playerProperties["playerAvatar"] = 6;
+      PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
     public override void OnConnectedToMaster(){
-      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+      SceneManager.LoadScene("Lobby");
     }
 }
             
