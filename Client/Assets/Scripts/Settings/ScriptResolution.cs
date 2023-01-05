@@ -12,13 +12,14 @@ public class ScriptResolution : MonoBehaviour
 
     void Start(){
         checkResolution();
+  
     }
 
 
-     public void onChange(bool value)
+     public void onChange()
     {
         
-        Screen.fullScreen = value;
+        Screen.fullScreen = !Screen.fullScreen;
      
     }
 
