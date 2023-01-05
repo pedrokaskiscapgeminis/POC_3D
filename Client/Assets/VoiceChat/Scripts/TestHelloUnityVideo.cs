@@ -18,9 +18,8 @@ public class TestHelloUnityVideo
     public Sprite MicroOff = Resources.Load<Sprite>("Sprites/micro_off");
     public Sprite MicroOn = Resources.Load<Sprite>("Sprites/micro_on");
 
-    // instance of agora engine
+    // Instance of agora engine
     private IRtcEngine mRtcEngine { get; set; }
-    private Text MessageText { get; set; }
 
     public AudioVideoStates AudioVideoState = new AudioVideoStates();
     
@@ -121,7 +120,9 @@ public class TestHelloUnityVideo
         mRtcEngine.LeaveChannel();
     }
 
-    // unload agora engine
+    /// <summary>
+    ///   Unload agora engine
+    /// </summary>
     public void unloadEngine()
     {
         Debug.Log("calling unloadEngine");
@@ -134,7 +135,9 @@ public class TestHelloUnityVideo
         }
     }
 
-    // changes the state of the audio
+    /// <summary>
+    ///   Changes the state of the audio
+    /// </summary>
     public void MuteAudio(string activeScene){
         if (AudioVideoState.pubAudio == true){
             mRtcEngine.MuteLocalAudioStream(true);
@@ -153,13 +156,17 @@ public class TestHelloUnityVideo
         }
     }
 
-    // implement engine callbacks
+    /// <summary>
+    ///   Implement engine callbacks
+    /// </summary>
     private void onJoinChannelSuccess(string channelName, uint uid, int elapsed)
     {
         Debug.Log("JoinChannel " + channelName + " Success: uid = " + uid);
     }
 
-    // When a remote user joined, this delegate will be called. 
+    /// <summary>
+    ///   When a remote user joined, this delegate will be called.
+    /// </summary>
     private void onUserJoined(uint uid, int elapsed)
     {
         Debug.Log("onUserJoined: uid = " + uid + " elapsed = " + elapsed);
@@ -184,14 +191,6 @@ public class TestHelloUnityVideo
         }
 
         Debug.LogError(msg);
-        if (MessageText != null)
-        {
-            if (MessageText.text.Length > 0)
-            {
-                msg = "\n" + msg;
-            }
-            MessageText.text += msg;
-        }
 
         LastError = error;
     }
