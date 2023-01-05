@@ -45,12 +45,6 @@ public class TestHelloUnityVideo
         mRtcEngine.SetLogFilter(LOG_FILTER.DEBUG | LOG_FILTER.INFO | LOG_FILTER.WARNING | LOG_FILTER.ERROR | LOG_FILTER.CRITICAL);
     }
 
-    // public void SetupInitState()
-    // {
-    //     AudioVideoState.pubAudio = false;
-    //     AudioVideoState.subAudio = true;
-    // }
-
     /// <summary>
     ///    Joining a channel as a host. This is same as running in Communication mode for other hosts.
     /// </summary>
@@ -62,8 +56,6 @@ public class TestHelloUnityVideo
 
         if (mRtcEngine == null)
             return;
-
-        // SetupInitState();
 
         // set callbacks (optional)
         mRtcEngine.OnJoinChannelSuccess = onJoinChannelSuccess;

@@ -21,7 +21,8 @@ public class TestHome : MonoBehaviour
 
     private string HomeSceneName = "Lobby";
 
-    private string[] PlaySceneName = new string[]{"Mapa1","Mapa2"}; // List that contains all the PlayScenes, needs to be updated
+    // List that contains all the PlayScenes, needs to be updated. Same values as LobbyManager.ROOM_NAMES
+    private string[] PlaySceneName = new string[]{"Mapa1","Mapa2"}; 
 
     public GameObject roomPanel;
 
