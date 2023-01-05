@@ -13,6 +13,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
 
     //Variables
+     ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
 
     //Paneles UI
     public GameObject lobbyPanel;
@@ -112,8 +113,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
     //Método del botón de selección de personaje para cargar el mapa
       public void OnClickPlayButton()
     {
-        
-
         //Si es el cliente principal envía un evento a los demás para que se sincronicen
         if (PhotonNetwork.IsMasterClient)
         {
@@ -133,8 +132,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
         else
         {
 
-
-      
            //Envíamos evento si nos unimos después 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others }; // You would have to set the Receivers to All in order to receive this event on the local client as well
             PhotonNetwork.RaiseEvent(1, "", raiseEventOptions, SendOptions.SendReliable);
@@ -142,14 +139,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
             PhotonNetwork.IsMessageQueueRunning = false;
             PhotonNetwork.LoadLevel("Mapa1");
         }
-            
-
-
-
-
-
-
-
     }
 
     //Funciones 
@@ -187,13 +176,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
         }
     }
 
-    //Método cuando un usuario entra a una sala, le actualiza la lista de jugadores ya en sala
+    //Método cuando un usuario entra a una sala por primera vez, le actualiza la lista de jugadores ya en sala
     void UpdatePlayerList()
     {
         foreach (KeyValuePair<int,Player> player in PhotonNetwork.CurrentRoom.Players)
         {
            PlayerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent); 
-           newPlayerItem.InicializePlayerInfo(player.Value);
+           newPlayerItem.SetPlayerInfo(player.Value);
 
             if (player.Value == PhotonNetwork.LocalPlayer)
             {
@@ -267,9 +256,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
         lobbyPanel.SetActive(false);
         roomPanel.SetActive(true);
         roomName.text="Room Name: " + PhotonNetwork.CurrentRoom.Name;
-        PhotonNetwork.SetPlayerCustomProperties(null);
-
-        Debug.Log("NULL -----------------------------------------------------");
 
         //Método para actualizar la lista de jugadores
 
@@ -300,7 +286,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
     //CallBack de Photon que se llama al salir de una sala
     public override void OnLeftRoom()
     {
-
+        playerProperties["playerAvatar"] = 6;
+        PhotonNetwork.SetPlayerCustomProperties(playerProperties);
         //Eliminamos la lista de jugadores al salir de la sala
 
         foreach(PlayerItem item in playerItemsList)
@@ -310,7 +297,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
         }
         playerItemsList.Clear();
 
-        //Activamos los paneles de la interfaz del Lobby.
+        //Desactivamos el panel de la room y Activamos lel panel de la interfaz del Lobby.
         if (roomPanel!=null & lobbyPanel!=null){
             roomPanel.SetActive(false);
             lobbyPanel.SetActive(true);

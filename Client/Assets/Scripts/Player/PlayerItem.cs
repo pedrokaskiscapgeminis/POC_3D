@@ -21,15 +21,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 
    private void Start()
    {
-    playerProperties["playerAvatar"] = 6;
-   }
-
-   public void InicializePlayerInfo(Player _player)
-   {
-    playerName.text = _player.NickName;
-    player = _player;
-    playerProperties["playerAvatar"]  = (int)player.CustomProperties["playerAvatar"];
-    playerProperties["playerAvatar"] = 6;
+    playerProperties["playerAvatar"] = 0;
    }
 
    public void SetPlayerInfo(Player _player)
