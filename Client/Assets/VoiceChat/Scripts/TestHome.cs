@@ -21,7 +21,7 @@ public class TestHome : MonoBehaviour
 
     private string HomeSceneName = "Lobby";
 
-    private string[] PlaySceneName = new string[]{"Mapa1"};
+    private string[] PlaySceneName = new string[]{"Mapa1"}; // List that contains all the PlayScenes, needs to be updated
 
     public GameObject roomPanel;
 
@@ -60,25 +60,24 @@ public class TestHome : MonoBehaviour
         if (roomPanel == null)
             Destroy(this.gameObject);
     }
+
+    /// <summary>
+    ///   Checks if the Agora App ID has been introduced.
+    /// </summary>
     private void CheckAppId()
     {
         Debug.Assert(AppID.Length > 10, "Please fill in your AppId first on Game Controller object.");
-        GameObject go = GameObject.Find("AppIDText");
-        if (go != null)
+
+        if (string.IsNullOrEmpty(AppID))
         {
-            Text appIDText = go.GetComponent<Text>();
-            if (appIDText != null)
-            {
-                if (string.IsNullOrEmpty(AppID))
-                {
-                    appIDText.text = "AppID: " + "UNDEFINED!";
-                }
-                else
-                {
-                    appIDText.text = "AppID: " + AppID.Substring(0, 4) + "********" + AppID.Substring(AppID.Length - 4, 4);
-                }
-            }
+            Debug.Log("AppID: " + "UNDEFINED!");
         }
+        else
+        {
+            Debug.Log("AppID: " + AppID.Substring(0, 4) + "********" + AppID.Substring(AppID.Length - 4, 4));
+        }
+
+
     }
 
     /// <summary>
@@ -97,7 +96,22 @@ public class TestHome : MonoBehaviour
 #endif
     }
 
-    public void onJoinButtonClicked(string ChannelName, bool muted = false)
+    ///<summary>
+    /// Checks if the Microphone image concurs with the audio state, and if not, changes the image.
+    /// </summary>
+    public void CheckMicroImage(){
+        Debug.Log("hola");
+        if (app.AudioVideoState.pubAudio==true)
+            GameObject.Find("Micro").GetComponent<Image>().sprite = app.MicroOn;
+        else
+            GameObject.Find("Micro").GetComponent<Image>().sprite = app.MicroOff;
+    }
+
+
+    ///<summary>
+    /// Called when the Join Button is clicked. This method creates the voice chat room.
+    /// </summary>
+    public void onJoinButtonClicked(string ChannelName, bool muted = true)
     {
         // create app if nonexistent
         if (ReferenceEquals(app, null))
@@ -110,6 +124,9 @@ public class TestHome : MonoBehaviour
         app.join(ChannelName, muted);
     }
 
+    ///<summary>
+    /// Called when the Leave Button is clicked. This method deletes the voice chat room.
+    /// </summary>
     public void onLeaveButtonClicked()
     {
         if (!ReferenceEquals(app, null))
@@ -124,6 +141,9 @@ public class TestHome : MonoBehaviour
         }
     }
 
+    ///<summary>
+    /// Called when Application is being closed. This method deletes the voice chat room.
+    /// </summary>
     public void OnApplicationQuit()
     {
         if (!ReferenceEquals(app, null))

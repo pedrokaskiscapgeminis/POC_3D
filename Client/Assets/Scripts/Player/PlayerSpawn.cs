@@ -26,6 +26,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
         escPul=false;
         int randomNumber = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[randomNumber];
+        voiceChat=GameObject.Find("VoiceManager").GetComponent<TestHome>();
         
         if(PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == null || (int) PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == 6)
         {
@@ -33,7 +34,6 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
             PhotonNetwork.LeaveRoom();
 
             //Stop voice chat
-            voiceChat=GameObject.Find("VoiceManager").GetComponent<TestHome>();
             voiceChat.onLeaveButtonClicked();
         }
         else
@@ -43,6 +43,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
             playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
             playerToSpawn.transform.Find("PlayerCamera").gameObject.SetActive(true);
             playerToSpawn.transform.Find("PlayerUIPrefab").gameObject.SetActive(true);
+            voiceChat.CheckMicroImage();
             PhotonNetwork.IsMessageQueueRunning = true;
 }
 }

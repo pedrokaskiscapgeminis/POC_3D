@@ -22,7 +22,7 @@ public class TestHelloUnityVideo
     private IRtcEngine mRtcEngine { get; set; }
     private Text MessageText { get; set; }
 
-    private AudioVideoStates AudioVideoState = new AudioVideoStates();
+    public AudioVideoStates AudioVideoState = new AudioVideoStates();
     
     // Testing Volume Indication
     private bool TestVolumeIndication = false;
@@ -48,7 +48,7 @@ public class TestHelloUnityVideo
 
     // public void SetupInitState()
     // {
-    //     AudioVideoState.pubAudio = true;
+    //     AudioVideoState.pubAudio = false;
     //     AudioVideoState.subAudio = true;
     // }
 
