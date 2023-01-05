@@ -12,13 +12,18 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
 
+       //Constantes
+    public const int NUMBER_MAPS = 2;
+
+    public string[] ROOM_NAMES = {"Mapa1", "Mapa2"};
+
     //Variables
      ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
 
     //Paneles UI
     public GameObject lobbyPanel;
     public GameObject roomPanel;
-
+    public TMP_Text mapName;
     //Inputs
     //Input para crear una sala
     public TMP_InputField roomInputField;
@@ -39,10 +44,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public RoomItem roomItemPrefab;
     public PlayerItem playerItemPrefab;
 
+     //Buttons
+
+    public GameObject leftArrowButton;
+    public GameObject rightArrowButton;
+    public GameObject playButton;
+
     //Otras variables
     public Transform contentObject;
     public Transform playerItemParent;
-    public GameObject playButton;
+
 
     private void Start() 
     {
@@ -56,7 +67,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
     
      private void Update() {
         {
-            if (PhotonNetwork.CurrentRoom != null )
+            if (PhotonNetwork.CurrentRoom != null ){
              
              if (PhotonNetwork.IsMasterClient || (bool) PhotonNetwork.CurrentRoom.CustomProperties["Init"])
             {
@@ -64,6 +75,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
             }else{
                 playButton.SetActive(false);
             }
+
+            if (PhotonNetwork.IsMasterClient){
+                 mapName.enabled = true;
+                 leftArrowButton.SetActive(true);
+                 rightArrowButton.SetActive(true);
+            }
+
+            else {
+                 mapName.enabled = false;
+                 leftArrowButton.SetActive(false);
+                 rightArrowButton.SetActive(false);
+            }
+        }
         }
     }
 
@@ -80,7 +104,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
             Hashtable customSettings = new Hashtable();
 
             //Mapa
-            customSettings.Add("Map", 1);
+            customSettings.Add("Map", 0);
             customSettings.Add("Init",false);
 
 
@@ -110,36 +134,77 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
      voiceChat.onLeaveButtonClicked();
      }
 
-    //Método del botón de selección de personaje para cargar el mapa
+     //Método del botón de selección de personaje para cargar el mapa
       public void OnClickPlayButton()
     {
+        
+
         //Si es el cliente principal envía un evento a los demás para que se sincronicen
         if (PhotonNetwork.IsMasterClient)
         {
+
+            //Enviamos el evento
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            PhotonNetwork.RaiseEvent(2, "", raiseEventOptions, SendOptions.SendReliable);
 
             //Cambiamos la sala a empezada
 
             Hashtable customSettings = PhotonNetwork.CurrentRoom.CustomProperties;
             customSettings["Init"] = true;
             PhotonNetwork.CurrentRoom.SetCustomProperties(customSettings);
-
-            Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties["Init"]);
-
-            //Enviamos el evento
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-            PhotonNetwork.RaiseEvent(2, "", raiseEventOptions, SendOptions.SendReliable);
         }
         else
         {
 
+
+      
            //Envíamos evento si nos unimos después 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others }; // You would have to set the Receivers to All in order to receive this event on the local client as well
             PhotonNetwork.RaiseEvent(1, "", raiseEventOptions, SendOptions.SendReliable);
              
             PhotonNetwork.IsMessageQueueRunning = false;
-            PhotonNetwork.LoadLevel("Mapa1");
+            int mapa = (int) PhotonNetwork.CurrentRoom.CustomProperties["Map"];
+            PhotonNetwork.LoadLevel(ROOM_NAMES[mapa] );
+       
         }
-    }
+    } 
+
+
+      //Método del botón para cambiar el mapa a la izquierda.
+    public void OnClickChangeMapLeft()
+    {
+        //Obtenemos las propiedades de la sala
+
+            Hashtable customSettings = PhotonNetwork.CurrentRoom.CustomProperties;
+            int mapa = (int) customSettings["Map"];
+          
+            //Si ya estamos en el último mapa no lo cambiamos
+            if( mapa == 0) return;
+
+            customSettings["Map"] = mapa - 1;
+            mapName.text = ROOM_NAMES[mapa - 1];
+            PhotonNetwork.CurrentRoom.SetCustomProperties(customSettings);
+     
+     }
+     
+    //Método del botón para cambiar el mapa a la derecha.
+    public void OnClickChangeMapRight()
+    {
+
+        //Obtenemos las propiedades de la sala
+
+            Hashtable customSettings = PhotonNetwork.CurrentRoom.CustomProperties;
+            int mapa = (int) customSettings["Map"];
+           
+            //Si ya estamos en el último mapa no lo cambiamos
+            if( mapa == (NUMBER_MAPS - 1) ) return;
+
+            customSettings["Map"] = mapa + 1;
+            mapName.text = ROOM_NAMES[mapa + 1];
+            PhotonNetwork.CurrentRoom.SetCustomProperties(customSettings);
+    
+     }
+
 
     //Funciones 
 
@@ -327,7 +392,8 @@ public void OnEvent(EventData photonEvent)
 
 
             PhotonNetwork.IsMessageQueueRunning = false;
-            PhotonNetwork.LoadLevel("Mapa1");
+            int mapa = (int) PhotonNetwork.CurrentRoom.CustomProperties["Map"];
+            PhotonNetwork.LoadLevel(ROOM_NAMES[mapa] );
    }
 }
     
