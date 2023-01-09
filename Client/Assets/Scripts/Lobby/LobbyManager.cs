@@ -54,10 +54,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public Transform contentObject;
     public Transform playerItemParent;
 
+  
+
+
 
     private void Start() 
     {
-        PhotonNetwork.JoinLobby();
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
 
         //find voice chat script
         voiceChat=GameObject.Find("VoiceManager").GetComponent<TestHome>();
