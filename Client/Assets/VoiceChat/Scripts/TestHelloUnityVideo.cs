@@ -79,6 +79,7 @@ public class TestHelloUnityVideo
         mRtcEngine.JoinChannel(token: null, channelId: channel, info: "", uid: 0,
                 options: new ChannelMediaOptions(AudioVideoState.subAudio,
                 AudioVideoState.pubAudio));
+        mRtcEngine.MuteLocalAudioStream(muted);
     }
 
     public void leave()
