@@ -103,7 +103,6 @@ public class TestHome : MonoBehaviour
 
         // join channel and jump to next scene
         app.join(ChannelName, muted);
-        SceneManager.sceneLoaded += OnLevelFinishedLoading; // configure GameObject after scene is loaded
         //SceneManager.LoadScene(PlaySceneName, LoadSceneMode.Single);
     }
 
@@ -117,18 +116,6 @@ public class TestHome : MonoBehaviour
             //SceneManager.LoadScene(HomeSceneName, LoadSceneMode.Single);
         }
         // Destroy(gameObject);
-    }
-
-    public void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-    {
-        if (PlaySceneName.Contains(scene.name))
-        {
-            if (!ReferenceEquals(app, null))
-            {
-                app.onSceneHelloVideoLoaded(); // call this after scene is loaded
-            }
-            SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-        }
     }
 
     void OnApplicationQuit()
