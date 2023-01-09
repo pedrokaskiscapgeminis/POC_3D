@@ -75,30 +75,10 @@ public class TestHelloUnityVideo
             mRtcEngine.EnableAudioVolumeIndication(500, 8, report_vad: true);
         }
 
-        // NOTE, we use the third button to invoke JoinChannelByKey
-        // otherwise, it joins using JoinChannelWithUserAccount
-        if (muted)
-        {
-            AudioVideoState.pubAudio = false;
-
-            // mute locally only. still subscribing
-            mRtcEngine.EnableLocalAudio(false);
-            mRtcEngine.MuteLocalAudioStream(true);
-            mRtcEngine.JoinChannelByKey(channelKey: null, channelName: channel, info: "", uid: 0);
-        }
-        else
-        {
-            // join channel with string user name
-            // ************************************************************************************* 
-            // !!!  There is incompatibiity with string Native UID and Web string UIDs !!!
-            // !!!  We strongly recommend to use uint uid only !!!!
-            // mRtcEngine.JoinChannelWithUserAccount(null, channel, "user" + Random.Range(1, 99999),
-            // ************************************************************************************* 
-            AudioVideoState.pubAudio = true;
-            mRtcEngine.JoinChannel(token: null, channelId: channel, info: "", uid: 0,
-                 options: new ChannelMediaOptions(AudioVideoState.subAudio,
-                 AudioVideoState.pubAudio));
-        }
+        AudioVideoState.pubAudio = !muted;
+        mRtcEngine.JoinChannel(token: null, channelId: channel, info: "", uid: 0,
+                options: new ChannelMediaOptions(AudioVideoState.subAudio,
+                AudioVideoState.pubAudio));
     }
 
     public void leave()

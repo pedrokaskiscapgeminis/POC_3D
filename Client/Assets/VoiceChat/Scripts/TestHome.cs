@@ -101,7 +101,6 @@ public class TestHome : MonoBehaviour
     /// Checks if the Microphone image concurs with the audio state, and if not, changes the image.
     /// </summary>
     public void CheckMicroImage(){
-        Debug.Log("hola");
         if (app.AudioVideoState.pubAudio==true)
             GameObject.Find("Micro").GetComponent<Image>().sprite = app.MicroOn;
         else
