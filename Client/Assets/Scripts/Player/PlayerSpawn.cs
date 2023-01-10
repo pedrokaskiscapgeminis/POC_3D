@@ -16,7 +16,12 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
     public Transform[] spawnPoints;
     public GameObject Pausa;
     public GameObject Settings;
+    public string mapName;
+   
     bool escPul;
+    //Variables estáticas
+    static bool reload = false;
+    static Vector3 spawnPoint;
 
     GameObject playerToSpawn;
 
@@ -24,8 +29,11 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
 
         estado = Estados.Juego;
         escPul=false;
+        //We check if it's the first time the user entered the room.
+        if(reload == false){
         int randomNumber = Random.Range(0, spawnPoints.Length);
-        Transform spawnPoint = spawnPoints[randomNumber];
+        spawnPoint = spawnPoints[randomNumber].position;
+        }
         voiceChat=GameObject.Find("VoiceManager").GetComponent<TestHome>();
         
         if(PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == null || (int) PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == 6)
@@ -40,13 +48,19 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
         }
        
             playerToSpawn = playerPrefabs[(int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"]];
-            playerToSpawn = (GameObject) PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, Quaternion.identity);
+            playerToSpawn = (GameObject) PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint, Quaternion.identity);
+           
             playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
             playerToSpawn.transform.Find("PlayerCamera").gameObject.SetActive(true);
             playerToSpawn.transform.Find("PlayerUIPrefab").gameObject.SetActive(true);
             voiceChat.CheckMicroImage();
+<<<<<<< Updated upstream
             PhotonNetwork.IsMessageQueueRunning = true;
 
+=======
+            //PhotonNetwork.IsMessageQueueRunning = true;
+}
+>>>>>>> Stashed changes
 }
 
 public override void OnConnectedToMaster()
@@ -103,9 +117,12 @@ public void OnEvent(EventData photonEvent)
 {
    if(photonEvent.Code == 1)
    {
-
-   PhotonNetwork.IsMessageQueueRunning = false;
-   PhotonNetwork.LoadLevel("Mapa1");
+    //We maintain the same state between reloads.
+    reload = true;
+    spawnPoint = playerToSpawn.transform.position;
+   
+   //We reload the level
+   PhotonNetwork.LoadLevel(mapName);
    }
 }
 }

@@ -894,6 +894,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1738651826}
     - target: {fileID: 2365219672436742047, guid: f49700300af5a254ebfb8ff8db158be5, type: 3}
+      propertyPath: mapName
+      value: Mapa1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2365219672436742047, guid: f49700300af5a254ebfb8ff8db158be5, type: 3}
       propertyPath: Settings
       value: 
       objectReference: {fileID: 1013954837}

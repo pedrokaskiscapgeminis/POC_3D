@@ -165,7 +165,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others }; // You would have to set the Receivers to All in order to receive this event on the local client as well
             PhotonNetwork.RaiseEvent(1, "", raiseEventOptions, SendOptions.SendReliable);
              
-            PhotonNetwork.IsMessageQueueRunning = false;
+            //PhotonNetwork.IsMessageQueueRunning = false;
             int mapa = (int) PhotonNetwork.CurrentRoom.CustomProperties["Map"];
             PhotonNetwork.LoadLevel(ROOM_NAMES[mapa] );
        
