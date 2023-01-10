@@ -10,25 +10,34 @@ using UnityEngine.SceneManagement;
 
 public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-    private Estados estado;
-    private TestHome voiceChat;
-    public GameObject[] playerPrefabs;
-    public Transform[] spawnPoints;
+    //GameObjects
     public GameObject Pausa;
     public GameObject Settings;
+    public GameObject[] playerPrefabs;
+
+    //Map Variables
     public string mapName;
-   
     bool escPul;
-    //Variables estáticas
+
+    //Other variables
+    private Estados estado;
+    private TestHome voiceChat;
+    
+    public Transform[] spawnPoints;
+
+    //Static variables
     static bool reload = false;
     static Vector3 spawnPoint;
 
+    //Player Character
     GameObject playerToSpawn;
 
     private void Start() {
 
+        //States
         estado = Estados.Juego;
         escPul=false;
+
         //We check if it's the first time the user entered the room.
         if(reload == false){
         int randomNumber = Random.Range(0, spawnPoints.Length);
@@ -36,6 +45,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
         }
         voiceChat=GameObject.Find("VoiceManager").GetComponent<TestHome>();
         
+        //Random avatar character
         if(PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == null || (int) PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == 6)
         {
            
@@ -47,6 +57,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
             
         }
        
+            //Player and camera instantation
             playerToSpawn = playerPrefabs[(int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"]];
             playerToSpawn = (GameObject) PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint, Quaternion.identity);
            
@@ -63,12 +74,13 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
 
 public override void OnConnectedToMaster()
 {
+    //Not needed??
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
 }
 
 private void Update() {
 
-    //Estado pausa
+    //Pause State
     if (estado == Estados.Juego)
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !escPul)
@@ -87,7 +99,7 @@ private void Update() {
     
     if (!Input.GetKeyDown(KeyCode.Escape)) escPul=false; // Detecta si no está pulsado
 
-    //Estado juego
+    //Game State
     if (estado == Estados.Pausa)
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !escPul)
