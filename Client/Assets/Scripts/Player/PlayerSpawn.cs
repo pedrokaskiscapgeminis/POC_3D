@@ -54,13 +54,11 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
             playerToSpawn.transform.Find("PlayerCamera").gameObject.SetActive(true);
             playerToSpawn.transform.Find("PlayerUIPrefab").gameObject.SetActive(true);
             voiceChat.CheckMicroImage();
-<<<<<<< Updated upstream
-            PhotonNetwork.IsMessageQueueRunning = true;
 
-=======
+
             //PhotonNetwork.IsMessageQueueRunning = true;
-}
->>>>>>> Stashed changes
+
+
 }
 
 public override void OnConnectedToMaster()
