@@ -30,14 +30,15 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
         
         if(PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == null || (int) PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == 6)
         {
-            Debug.Log("Avatar no seleccionado");
-            PhotonNetwork.LeaveRoom();
-
-            //Stop voice chat
-            voiceChat.onLeaveButtonClicked();
+           
+            int value = Random.Range(0,5);
+            PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] = value;    
+           
+            Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] = value);
+            
+            
         }
-        else
-        {
+       
             playerToSpawn = playerPrefabs[(int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"]];
             playerToSpawn = (GameObject) PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, Quaternion.identity);
             playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
@@ -45,7 +46,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
             playerToSpawn.transform.Find("PlayerUIPrefab").gameObject.SetActive(true);
             voiceChat.CheckMicroImage();
             PhotonNetwork.IsMessageQueueRunning = true;
-}
+
 }
 
 public override void OnConnectedToMaster()
