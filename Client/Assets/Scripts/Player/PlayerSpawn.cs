@@ -15,10 +15,12 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
     public GameObject[] playerPrefabs;
     public Transform[] spawnPoints;
     public GameObject Pausa;
+    public GameObject Chat;
     public GameObject Settings;
     public string mapName;
    
     bool escPul;
+    bool TPul;
     //Variables estáticas
     static bool reload = false;
     static Vector3 spawnPoint;
@@ -29,6 +31,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks, IOnEventCallback
 
         estado = Estados.Juego;
         escPul=false;
+        TPul=false;
         //We check if it's the first time the user entered the room.
         if(reload == false){
         int randomNumber = Random.Range(0, spawnPoints.Length);
@@ -94,6 +97,41 @@ private void Update() {
         {
             Settings.SetActive(false);
             Pausa.SetActive(false);
+            Time.timeScale = 1;
+            playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
+            Cursor.visible = false;   
+            Cursor.lockState = CursorLockMode.Locked; // Menu de opciones, para que se bloquee la camara 
+            estado = Estados.Juego;
+            Debug.Log(estado);  
+        }
+    }
+
+     if (estado == Estados.Juego)
+    {
+        if (Input.GetKeyDown(KeyCode.T) && !TPul)
+            {
+                Debug.Log("T pulsada");
+                Chat.SetActive(true);
+                //Time.timeScale = 0;
+                playerToSpawn.GetComponent<SC_FPSController>().enabled = false;
+
+                Cursor.visible = true;   
+                Cursor.lockState = CursorLockMode.None; // Desactiva el bloqueo cursor
+                estado = Estados.Pausa;
+                TPul=true; //Escape activado
+                Debug.Log(estado);
+            }
+    }      
+    
+    if (!Input.GetKeyDown(KeyCode.T)) TPul=false; // Detecta si no está pulsado
+
+    //Estado juego
+    if (estado == Estados.Pausa)
+    {
+        if (Input.GetKeyDown(KeyCode.T) && !TPul)
+        {
+           
+            Chat.SetActive(false);
             Time.timeScale = 1;
             playerToSpawn.GetComponent<SC_FPSController>().enabled = true;
             Cursor.visible = false;   
