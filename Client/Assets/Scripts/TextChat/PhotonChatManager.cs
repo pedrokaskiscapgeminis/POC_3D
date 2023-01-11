@@ -19,19 +19,12 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
 
     Player player;
 
-     public void SetPlayerInfo(Player _player)
-   {
-    username = _player.NickName;
-    player = _player;
-
-   }
-
-    public Player GetPlayerInfo(){
-    return player;
-   }
+    
 
     public void ChatConnectOnClick()
     {
+        username=PhotonNetwork.NickName;
+        Debug.Log(PhotonNetwork.NickName);
         isConnected = true;
         chatClient = new ChatClient(this);
         chatClient.ChatRegion = "EU";
